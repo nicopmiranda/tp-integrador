@@ -1,0 +1,10 @@
+[
+    {
+        "_id": 1,
+        "name": "hola",
+        "surname": "Susana",
+        "email": "tortilla@gmail.com",
+        "username": "usuario1",
+        "password": "tortilla"
+    }
+]
