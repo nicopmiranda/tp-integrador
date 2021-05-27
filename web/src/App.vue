@@ -21,6 +21,7 @@ export default {
 :root {
   --primary-color: rgb(17, 0, 95);
   --secondary-color: rgb(243, 233, 179);
+  --text-shadow-hover: 0 0 4px rgb(97, 97, 97);
 }
 
 #app {
