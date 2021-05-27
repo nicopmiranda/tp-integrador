@@ -50,16 +50,16 @@
                 >
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Inicio</a>
+                            <router-link to="/home" class="nav-link">Inicio</router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Productos</a>
+                            <router-link to="/products" class="nav-link">Productos</router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Contacto</a>
+                            <router-link to="/contact" class="nav-link">Contacto</router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Registrarse</a>
+                            <router-link to="/register" class="nav-link">Registrarse</router-link>
                         </li>
                     </ul>
                     <div class="navbar-nav-options">
