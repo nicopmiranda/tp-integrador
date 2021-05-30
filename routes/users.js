@@ -1,11 +1,13 @@
 import express from 'express';
 import joi from 'joi';
 import dataUsers from '../data/users.js';
+import auth from '../middleware/auth.js';
 let router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', auth, async function(req, res, next) {
+  const users = await dataUsers.getUsers();
+  res.send(users);
 });
 
 router.get('/:id', async (req,res)=>{
@@ -23,10 +25,11 @@ router.post('/', async (req, res)=>{
       surname: joi.string().alphanum().required(),
       email: joi.string().email().required(),
       username: joi.string().alphanum().min(4).max(20).required(),
-      password: joi.string().pattern( new RegExp('[a-zA-Z0-9]{3,30}') ).required()
+      password: joi.string().pattern( new RegExp('[a-zA-Z0-9]{3,30}') ).required(),
+      role: joi.string().alphanum().default("user")
   });
   const result = schema.validate(req.body);
-  console.log(result);
+  
   if(result.error){
       res.status(400).send(result.error.details[0].message);
   } else{
@@ -35,5 +38,25 @@ router.post('/', async (req, res)=>{
       res.status(200).json(user);
   }    
 });
+
+router.post('/login', async (req, res) =>{
+  try{
+    const user = await dataUsers.findByCredentials(req.body.email, req.body.password);
+    const token = dataUsers.generateAuthToken(user);
+    res.send({user, token});
+  } catch(error){
+    res.status(401).send(error.message);
+  }
+});
+
+router.delete('/:id', async(req, res) =>{
+  const user = await dataUsers.deleteUser(req.params.id);
+
+  if(!user){
+    res.status(400).send(error.message);
+  }else{
+    res.json(user);
+  }
+})
 
 export default router;
