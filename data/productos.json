@@ -4,7 +4,7 @@
         "nombre": "hola",
         "descripcion": "Susana",
         "precio": 0.5,
-        "cantidad": 3,
+        "cantidad": 2,
         "password": "tortilla",
         "marca": "marca",
         "categoria": ["no se de q es el array"]
