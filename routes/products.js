@@ -12,8 +12,8 @@ router.post('/', async (req, res)=>{
       descripcion: joi.string().alphanum().min(3).required(),
       precio: joi.number().min(0,0).required(),
       cantidad :joi.number().min(1).required(),
-      marca: joi.string().alphanum().min(3).required(),
-      categorias:joi.array().required()
+      marca: joi.string().alphanum().min(3).required()
+     
 
   });
   const result = schema.validate(req.body);
