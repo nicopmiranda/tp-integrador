@@ -1,9 +1,11 @@
 import connection from './connection.js';
 import { ObjectId } from 'mongodb';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 async function getUsers() {
     const clientMongo = await connection.getConnection();
-    console.log(clientMongo);
+    
     const users = await clientMongo.db('ecommerce')
         .collection('users')
         .find()
@@ -12,23 +14,25 @@ async function getUsers() {
 }
 
 async function getUser(id) {
-    const clientmongo = await connection.getConnection();
-    const user = await clientmongo.db('ecommerce')
+    const clientMongo = await connection.getConnection();
+    const user = await clientMongo.db('ecommerce')
         .collection('users')
         .findOne({ _id: new ObjectId(id) });
     return user;
 }
 
 async function addUser(user) {
-    const clientmongo = await connection.getConnection();
-    const result = await clientmongo.db('ecommerce')
+    const clientMongo = await connection.getConnection();
+
+    user.password = await bcrypt.hash(user.password, 8);
+    const result = await clientMongo.db('ecommerce')
         .collection('users')
         .insertOne(user);
     return result;
 }
 
 async function updateUser(user) {
-    const clientmongo = await connection.getConnection();
+    const clientMongo = await connection.getConnection();
     const query = { _id: new ObjectId(user._id) };
     const newvalues = {
         $set: {
@@ -36,22 +40,46 @@ async function updateUser(user) {
             surname: user.surname,
             email: user.email,
             username: user.username,
-            password: user.password
+            password: user.password,
+            role: user.role
         }
     };
 
-    const result = await clientmongo.db('ecommerce')
+    const result = await clientMongo.db('ecommerce')
         .collection('users')
         .updateOne(query, newvalues);
     return result;
 }
 
 async function deleteUser(id) {
-    const clientmongo = await connection.getConnection();
-    const result = await clientmongo.db('ecommerce')
+    const clientMongo = await connection.getConnection();
+    const result = await clientMongo.db('ecommerce')
         .collection('users')
         .deleteOne({ _id: new ObjectId(id) });
     return result;
 }
 
-export default { getUsers, getUser, addUser, updateUser, deleteUser };
+async function findByCredentials(email, password) {
+    const clientMongo = await connection.getConnection();
+    const user = await clientMongo.db('ecommerce')
+        .collection('users')
+        .findOne({ email: email });
+
+    if(!user){
+        throw new Error('Credenciales inválidas');
+    }
+
+    const correctPass = await bcrypt.compare(password, user.password);
+    if(!correctPass){
+        throw new Error('Usuario o contraseña incorrectos');
+    }
+
+    return user;
+}
+
+function generateAuthToken(user){
+    const token = jwt.sign({_id : user._id}, 'yellow', {expiresIn : '2h'});
+    return token;
+}
+
+export default { getUsers, getUser, addUser, updateUser, deleteUser, findByCredentials, generateAuthToken };
