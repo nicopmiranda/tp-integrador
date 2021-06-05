@@ -1,19 +1,61 @@
-const path= './data/productos.json';
-const fs = require('fs').promises;
+import connection from './connection.js';
+import { ObjectId } from 'mongodb';
 
-async function addProducto(producto){
-    const productos = await getProductos();
-    inventors.sort((a,b)=> a._id - b._id);
-    const lastId = productos[productos.length-1]._id;
-    producto._id = lastId + 1;
-    productos.push(producto);
-    await fs.writeFile(path, JSON.stringify(productos, null, ' '));
+async function getProductos() {
+    const clientMongo = await connection.getConnection();
+    console.log(clientMongo);
+    const producto = await clientMongo.db('ecommerce')
+        .collection('producto')
+        .find()
+        .toArray();
+    return productos;
+}
 
+async function getProducto(id) {
+    const clientmongo = await connection.getConnection();
+    const producto = await clientmongo.db('ecommerce')
+        .collection('producto')
+        .findOne({ _id: new ObjectId(id) });
     return producto;
 }
-async function getProductos(){
-    const productos = await fs.readFile(path, 'utf-8');
-    return JSON.parse(productos);
+
+async function addProducto(producto) {
+    const clientmongo = await connection.getConnection();
+    const result = await clientmongo.db('ecommerce')
+        .collection('producto')
+        .insertOne(producto);
+    return result;
 }
 
-module.exports = {getProductos,addProducto}
+async function updateProducto(producto) {
+    const clientmongo = await connection.getConnection();
+    const query = { _id: new ObjectId(producto._id) };
+    const newvalues = {
+        $set: {
+           
+                   nombre: producto.nombre,
+                   descripcion: producto.descripcion,
+                   precio : producto.precio,
+                   cantidad : producto.cantidad,
+                   marca : producto.marca,
+                   categorias: producto.categorias,
+                   imagen: producto.imagen
+            
+                }
+    };
+
+    const result = await clientmongo.db('ecommerce')
+        .collection('producto')
+        .updateOne(query, newvalues);
+    return result;
+}
+
+async function deleteProducto(id) {
+    const clientmongo = await connection.getConnection();
+    const result = await clientmongo.db('ecommerce')
+        .collection('producto')
+        .deleteOne({ _id: new ObjectId(id) });
+    return result;
+}
+
+export default { getProductos, getProducto, addProducto, updateProducto, deleteProducto };
