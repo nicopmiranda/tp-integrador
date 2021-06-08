@@ -1,9 +1,9 @@
-
 import dataProducto from '../data/producto.js';
 import express from 'express';
+import joi from 'joi'
 let router = express.Router();
-let joi = require('joi');
-router.get('/', function(req, res, next) {
+
+router.get('/', function(req, res) {
   const productos = await dataProducto.getProductos(req);
   if(productos){
       res.json(productos);
