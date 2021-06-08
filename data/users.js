@@ -7,7 +7,6 @@ dotenv.config();
 
 async function getUsers() {
     const clientMongo = await connection.getConnection();
-    
     const users = await clientMongo.db('ecommerce')
         .collection('users')
         .find()

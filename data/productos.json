@@ -1,0 +1,11 @@
+[
+    {
+        "_id": 1,
+        "nombre": "hola",
+        "descripcion": "Susana",
+        "precio": 0.5,
+        "cantidad": 2,
+        "marca": "marca",
+        "categoria": ["no se de q es el array"]
+    }
+]
