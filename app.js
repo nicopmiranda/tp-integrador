@@ -4,6 +4,7 @@ import logger from 'morgan';
 
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/users.js';
+import paymentsRouter from './routes/payments.js';
 
 let app = express();
 
@@ -14,5 +15,6 @@ app.use(cookieParser());
 
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
+app.use('/payments', paymentsRouter);
 
 export default app;
