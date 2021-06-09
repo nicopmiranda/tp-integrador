@@ -5,6 +5,8 @@ import TheContact from './components/TheContact'
 import TheRegister from './components/TheRegister'
 import Products from './components/Products/index.vue'
 
+import ProductDetail from './components/ProductDetail'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,7 +14,8 @@ const routes = [
     {path: '/home', component: TheHome },
     {path: '/products', component: Products },
     {path: '/contact', component: TheContact },
-    {path: '/register', component: TheRegister }
+    {path: '/register', component: TheRegister },
+    {path:'/pd', component: ProductDetail}
 ]
 
 const router = new VueRouter({
