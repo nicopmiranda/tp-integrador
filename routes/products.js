@@ -1,6 +1,7 @@
 import dataProduct from '../data/products.js'
 import express from 'express'
 import joi from 'joi'
+import auth from '../middleware/auth.js';
 let router = express.Router()
 
 router.get('/', async function (req, res) {
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth.authAdmin, async (req, res) => {
     const schema = joi.object({
         // Los campos name, description y brand van sin el alphanum() de joi para que se puedan contemplar espacios en la cadena
         name: joi.string().min(3).required(), 
