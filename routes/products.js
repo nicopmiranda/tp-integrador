@@ -1,72 +1,76 @@
-import dataProducto from '../data/producto.js'
+import dataProduct from '../data/products.js'
 import express from 'express'
 import joi from 'joi'
 let router = express.Router()
 
 router.get('/', async function (req, res) {
-    const productos = await dataProducto.getProductos(req)
-    if (productos) {
-        res.json(productos)
+    const products = await dataProduct.getProducts()
+    if (products) {
+        res.json(products)
     } else {
         res.status(404).send('error ')
     }
 })
 
 router.get('/:id', async (req, res) => {
-    const producto = await dataProducto.getProducto(req.params.id)
-    if (producto) {
-        res.json(producto)
+    const products = await dataProduct.getProduct(req.params.id)
+    if (products) {
+        res.json(products)
     } else {
-        res.status(404).send('Usuario no encontrado')
+        res.status(404).send('Productos no encontrados')
     }
 })
 
 router.post('/', async (req, res) => {
     const schema = joi.object({
-        nombre: joi.string().alphanum().min(3).required(),
-        descripcion: joi.string().alphanum().min(3).required(),
-        precio: joi.number().min(0, 0).required(),
-        cantidad: joi.number().min(1).required(),
-        marca: joi.string().alphanum().min(3).required(),
-        imagen: joi.image().allowTypes(['png', 'jpg'])
+        // Los campos name, description y brand van sin el alphanum() de joi para que se puedan contemplar espacios en la cadena
+        name: joi.string().min(3).required(), 
+        description: joi.string().min(3).required(),
+        price: joi.number().min(0, 0).required(),
+        stock: joi.number().min(1).required(),
+        brand: joi.string().min(3).required(),
+        imageUrl: joi.string().uri().required(),
+        categories: joi.array().items(joi.string().min(3).required())
     })
     const result = schema.validate(req.body)
     console.log(result)
     if (result.error) {
         res.status(400).send(result.error.details[0].message)
     } else {
-        let producto = req.body
-        producto = await producto.addProducto(producto)
-        res.stats(200).json(producto)
+        let product = req.body
+        console.log(product)
+         await dataProduct.addProduct(product)
+        res.status(200).json(product)
     }
 })
 
 router.put('/:id', async (req, res) => {
     const schema = joi.object({
-        nombre: joi.string().alphanum().min(3).required(),
-        descripcion: joi.string().alphanum().min(3).required(),
-        precio: joi.number().min(0, 0).required(),
-        cantidad: joi.number().min(1).required(),
-        marca: joi.string().alphanum().min(3).required(),
-        imagen: joi.image().allowTypes(['png', 'jpg'])
+        name: joi.string().min(3).required(), 
+        description: joi.string().min(3).required(),
+        price: joi.number().min(0, 0).required(),
+        stock: joi.number().min(1).required(),
+        brand: joi.string().min(3).required(),
+        imageUrl: joi.string().uri().required(),
+        categories: joi.array().items(joi.string().min(3).required())
     })
     const result = schema.validate(req.body)
     if (result.error) {
         res.status(400).send(result.error.details[0].message)
     } else {
-        let producto = req.body
-        producto._id = req.params.id
-        dataProducto.updateProducto(producto)
-        res.json(producto)
+        let product = req.body
+        product._id = req.params.id
+        dataProduct.updateProduct(product)
+        res.json(product)
     }
 })
 
 router.delete('/:id', async (req, res) => {
-    const producto = await dataProducto.getProducto(req.params.id)
-    if (!producto) {
+    const product = await dataProduct.getProduct(req.params.id)
+    if (!product) {
         res.status(404).send('Producto no encontrado')
     } else {
-        dataProducto.deleteProducto(req.params.id)
+        dataProduct.deleteProduct(req.params.id)
         res.status(200).send('Producto eliminado')
     }
 })
