@@ -3,14 +3,14 @@
         <div class="navbar-search">
             <input
                 type="search"
-                class="form-control navbar-search-field"
-                placeholder="Escribe lo que quieras buscar"
+                class="navbar-search-field"
+                placeholder="Buscar"
             />
             <button
-                class="btn btn-outline-success navbar-search-submit"
+                class="navbar-search-submit"
                 type="submit"
             >
-                Buscar
+                <i class="fas fa-search"></i>
             </button>
         </div>
     </div>
@@ -19,15 +19,20 @@
 <style scoped>
 .navbar-search {
     display: flex;
+    background-color: white;
+    border-radius: 8px;
 }
 .navbar-search-field {
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
     box-shadow: none !important;
+    background-color: transparent;
+    width: 100%;
+    padding: .5rem;
+    border: none;
+    outline: none;
 }
 .navbar-search-submit {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-left: none;
+    background-color: transparent;
+    border: none;
+    padding-right: .5rem;
 }
 </style>
