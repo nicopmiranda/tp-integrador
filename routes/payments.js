@@ -18,16 +18,16 @@ router.post('/', auth.auth, async (req, res)=>{
             cardCode: joi.number().min(100).max(9999).required()
         }).required(),
         shippingDetails: {
-            address: joi.string().alphanum().required(),
-            city: joi.string().alphanum().required(),
-            state: joi.string().alphanum().required(),
-            zipCode: joi.string().alphanum().required()
+            address: joi.string().required(),
+            city: joi.string().required(),
+            state: joi.string().required(),
+            zipCode: joi.string().required()
         },
         billingDetails: {
-            address: joi.string().alphanum().required(),
-            city: joi.string().alphanum().required(),
-            state: joi.string().alphanum().required(),
-            zipCode: joi.string().alphanum().required()
+            address: joi.string().required(),
+            city: joi.string().required(),
+            state: joi.string().required(),
+            zipCode: joi.string().required()
         }
 
     });
