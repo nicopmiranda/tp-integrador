@@ -27,13 +27,13 @@ export default {
           category: "Monitors"
         },
         {
-          name: "Mouse Logitech Pro Series",
-          description: "Mouse Logitech gamer",
-          price: 4000.0,
+          name: "Teclado Redragon Vishnu K596",
+          description: "Este teclado Redragon de alto rendimiento permite que puedas disfrutar de horas ilimitadas de juegos. Está diseñado especialmente para que puedas expresar tanto tus habilidades como tu estilo. Mejorá tu experiencia de gaming, ya seas un aficionado o todo un experto, y hacé que tus jugadas alcancen otro nivel.",
+          price: 8799.0,
           stock : 3,
-          image: "https://i.postimg.cc/wTBrJPLz/monitor.webp",
+          image: "https://i.postimg.cc/Dzcz8ydk/teclado-Redragon.webp://i.postimg.cc/wTBrJPLz/monitor.webp",
           brand : "Logitech",
-          category: "Mouses"
+          category: "Keyboards"
         },
         {
           name: "Mouse Logitech Pro Series",
@@ -134,10 +134,22 @@ export default {
           brand: "Logitech",
           category: "Mouses"
         }
-      ]
+      ],
+      searchResult: ''
     }
   },
   computed: {
+    filteredProducts : function() {
+        if (this.searchResult.length > 0) {
+          return this.products.filter((product) => {
+            let productName = `${product.name}`
+            console.log(productName.toLowerCase());
+            return productName.toLowerCase().includes(this.searchResult.toLowerCase())
+          })
+        } else {
+          return this.products;
+        }
+    }
 
   },
   mounted () {
