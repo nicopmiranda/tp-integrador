@@ -2,10 +2,11 @@ import connection from './connection.js';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 async function getUsers() {
     const clientMongo = await connection.getConnection();
-    
     const users = await clientMongo.db('ecommerce')
         .collection('users')
         .find()
@@ -78,7 +79,7 @@ async function findByCredentials(email, password) {
 }
 
 function generateAuthToken(user){
-    const token = jwt.sign({_id : user._id}, 'yellow', {expiresIn : '2h'});
+    const token = jwt.sign({_id : user._id}, process.env.SECRET, {expiresIn : '2h'});
     return token;
 }
 

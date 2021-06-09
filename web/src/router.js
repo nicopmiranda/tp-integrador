@@ -10,7 +10,7 @@ import ProductDetail from './components/ProductDetail'
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/',   redirect: '/home'},
+    {path: '/', redirect: '/home'},
     {path: '/home', component: TheHome },
     {path: '/products', component: Products },
     {path: '/contact', component: TheContact },
