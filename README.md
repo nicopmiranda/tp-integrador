@@ -40,8 +40,8 @@ Existen tres roles dentro de la aplicación: Invitado, Usuario y Admin. Cada uno
 - Instalar las dependencias del proyecto especificadas en el package.json ejecutando “npm install”.
 - Agregar un archivo .env.
 - Instalar MongoDB en el equipo.
-- Recomendado: tener Postman para probar las peticiones a la API y agregar a la variable de ambiente PATH tanto nodejs como el bin de MongoDB.
-- Sugerencia: si se agrega la variable PORT al .env se puede modificar el puerto utilizado para correr el BackEnd.
+- _Recomendado_: tener Postman para probar las peticiones a la API y agregar a la variable de ambiente PATH tanto nodejs como el bin de MongoDB.
+- _Sugerencia_: si se agrega la variable PORT al .env se puede modificar el puerto utilizado para correr el BackEnd.
 
 ### Ejecución
 - **BackEnd:**
@@ -50,8 +50,8 @@ Existen tres roles dentro de la aplicación: Invitado, Usuario y Admin. Cada uno
     - npm run lint (para el análisis del código)
 - **FrontEnd:**
     - cd web/
-    - npm run build (entorno de producción)
-    - npm run serve (entorno de desarrollo)
+        - npm run build (entorno de producción)
+        - npm run serve (entorno de desarrollo)
 
 
 ## Endpoints
