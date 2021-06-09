@@ -5,11 +5,23 @@ Con axios o fetch se puede armar el request desde el front. */
 function auth(req, res, next){
     try{
         const token = req.header('Authorization').replace('Bearer ', '');
-        jwt.verify(token, 'yellow');
+        if(!jwt.verify(token, process.env.SECRET)){
+            jwt.verify(token, process.env.SECRET_ADMIN);
+        }
         next();
     } catch(error) {
         res.status(401).send({error: error.message});
     }
 }
 
-export default auth;
+function authAdmin(req, res, next){
+    try{
+        const token = req.header('Authorization').replace('Bearer ', '');
+        jwt.verify(token, process.env.SECRET_ADMIN);
+        next();
+    } catch(error) {
+        res.status(401).send({error: error.message});
+    }
+}
+
+export default { auth, authAdmin };

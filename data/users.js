@@ -35,7 +35,7 @@ async function addUser(user) {
 async function updateUser(user) {
     const clientMongo = await connection.getConnection();
     const query = { _id: new ObjectId(user._id) };
-    const newvalues = {
+    const newValues = {
         $set: {
             name: user.name,
             surname: user.surname,
@@ -45,10 +45,14 @@ async function updateUser(user) {
             role: user.role
         }
     };
-
+    console.log(newValues);
+    console.log(query)
+    //No estaría funcionando el query, preguntar al profe why
     const result = await clientMongo.db('ecommerce')
         .collection('users')
-        .updateOne(query, newvalues);
+        .updateOne(query, newValues);
+
+    console.log(result);
     return result;
 }
 
@@ -60,11 +64,11 @@ async function deleteUser(id) {
     return result;
 }
 
-async function findByCredentials(email, password) {
+async function findByCredentials(username, password) {
     const clientMongo = await connection.getConnection();
     const user = await clientMongo.db('ecommerce')
         .collection('users')
-        .findOne({ email: email });
+        .findOne({ username: username });
 
     if(!user){
         throw new Error('Credenciales inválidas');
@@ -79,7 +83,11 @@ async function findByCredentials(email, password) {
 }
 
 function generateAuthToken(user){
-    const token = jwt.sign({_id : user._id}, process.env.SECRET, {expiresIn : '2h'});
+    let secret = process.env.SECRET;
+    if(user.role === 'admin'){
+        secret = process.env.SECRET_ADMIN;
+    }
+    const token = jwt.sign({_id : user._id}, secret, {expiresIn : '2h'});
     return token;
 }
 

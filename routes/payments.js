@@ -1,10 +1,11 @@
 import express from 'express';
 import joi from 'joi';
 import gateway from '../services/gateway.js';
+import auth from '../middleware/auth.js';
 let router = express.Router();
 
 /* Post payment. */
-router.post('/', async (req, res)=>{    
+router.post('/', auth.auth, async (req, res)=>{    
     const schema = joi.object({
         trxAmount: joi.object({
             total: joi.number().positive().required(),
