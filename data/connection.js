@@ -7,17 +7,17 @@ const client = new MongoClient(uri);
 
 let instance = null;
 
-async function getConnection(){
-    if(instance == null){
-        try {
-            instance = await client.connect();
-            console.log("conectado");
-        } catch (err) {
-            console.log(err.message);
-            throw new Error('problemas al conectarse con mongo');
-        }
-    }
-    return instance;
+async function getConnection() {
+	if (instance == null) {
+		try {
+			instance = await client.connect();
+			console.log('conectado');
+		} catch (err) {
+			console.log(err.message);
+			throw new Error('problemas al conectarse con mongo');
+		}
+	}
+	return instance;
 }
 
-export default {getConnection};
+export default { getConnection };
