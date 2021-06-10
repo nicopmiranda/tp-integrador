@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "build": "cd ./web && npm run build",
+    "build": "cd ./web && npm i && npm run build",
     "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build ; fi",
     "startDev": "nodemon ./bin/www"
   },
