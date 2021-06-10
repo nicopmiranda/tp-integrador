@@ -15,6 +15,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
     "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
@@ -25,8 +26,7 @@
     "vue-template-compiler": "^2.6.11"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint-plugin-vue": "^6.2.2"
+    "babel-eslint": "^10.1.0"
   },
   "eslintConfig": {
     "root": true,
