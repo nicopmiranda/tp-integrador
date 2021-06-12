@@ -7,7 +7,9 @@
 				</a>
 				<navbar-search class="navbar-header-search"></navbar-search>
 				<div class="navbar-header-options">
-					<i class="fas fa-shopping-cart header-icon"></i>
+					<router-link to="/cart">
+						<i class="fas fa-shopping-cart header-icon"></i>
+					</router-link>
 					<i class="fas fa-user header-icon"></i>
 					<icon-toggler
 						class="
@@ -81,7 +83,9 @@
 						</li>
 					</ul>
 					<div class="navbar-nav-options">
-						<i class="fas fa-shopping-cart header-icon"></i>
+						<router-link to="/cart">
+							<i class="fas fa-shopping-cart header-icon"></i>
+						</router-link>
 						<i class="fas fa-user header-icon"></i>
 					</div>
 				</div>

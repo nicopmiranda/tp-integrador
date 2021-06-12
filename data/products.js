@@ -12,11 +12,16 @@ async function getProducts() {
 }
 
 async function getProduct(id) {
-	const clientmongo = await connection.getConnection();
-	const product = await clientmongo
-		.db('ecommerce')
-		.collection('products')
-		.findOne({ _id: new ObjectId(id) });
+	let product = null;
+	try {
+		const clientmongo = await connection.getConnection();
+		product = await clientmongo
+			.db('ecommerce')
+			.collection('products')
+			.findOne({ _id: new ObjectId(id) });
+	} catch(err) {
+		return product
+	}
 	return product;
 }
 

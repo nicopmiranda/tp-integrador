@@ -14,11 +14,11 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/:id', async (req, res) => {
-	const products = await dataProduct.getProduct(req.params.id);
-	if (products) {
-		res.json(products);
+	const product = await dataProduct.getProduct(req.params.id);
+	if (product) {
+		res.json(product);
 	} else {
-		res.status(404).send('Productos no encontrados');
+		res.status(404).send('Producto no encontrado');
 	}
 });
 

@@ -30,18 +30,24 @@
           </ul>
         </div>
         <div class="col-8">
-          <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4"  v-for="product in filteredProducts">
+          <div v-if="!filteredProducts" class="alert alert-info">
+            <p>Searching products...</p>
+          </div>
+          <div v-else-if="filteredProducts.length > 0" class="row row-cols-1 row-cols-md-3">
+            <div v-for="product in filteredProducts" :key="product._id" class="col mb-4">
               <div class="card">
-                <img v-bind:src="product.image" class="card-img-top" alt="...">
+                <img :src="product.imageUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{product.name}}</h5>
                   <p class="card-text">${{product.price}}</p>
-                  <a href="#" class="btn btn-success btn-sm">Ver Detalle</a>
+                  <router-link :to="`/product-details/${product._id}`" class="btn btn-success btn-sm">Ver Detalle</router-link>
                   <a href="#" class="btn btn-primary btn-sm">Agregar al carrito</a>
                 </div>
               </div>
             </div>
+          </div>
+          <div v-else class="alert alert-warning">
+            <p>Products not found</p>
           </div>
         </div>
       </div>

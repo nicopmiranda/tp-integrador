@@ -1,7 +1,10 @@
 <template>
 	<section class="product-detail-section">
 		<div class="container-fluid">
-			<div class="product-card">
+			<div v-if="!product" class="alert alert-info p-2">
+				<p>Searching product data...</p>
+			</div>
+			<div v-else-if="product._id" class="product-card">
 				<div class="product-image-container">
 					<img
 						:src="product.imageUrl"
@@ -64,46 +67,53 @@
 					</div>
 				</div>
 			</div>
+			<div v-else class="alert alert-danger p-2">
+				<p>Product not found</p>
+			</div>
 		</div>
 	</section>
 </template>
 
 <script>
+import { localMixinOrder } from '../localMixins'
+
 export default {
 	name: 'product-detail',
+	mixins: [localMixinOrder],
+	props: {
+		productId: {
+			type: String,
+			required: true
+		}
+	},
+	async created() {
+		this.product = await this.findProductById(this.productId)
+	},
 	data() {
 		return {
-			product: {
-				_id: '0x9052901',
-				name: 'Monitor, Teclado y Mouse - Mac',
-				description: 'Soy una descripcion.',
-				price: 200.0,
-				brand: 'Apple',
-				categories: ['monitor', 'mouse', 'keyboard', 'apple', 'mac'],
-				imageUrl:
-					'https://images.unsplash.com/photo-1494173853739-c21f58b16055?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGNvbXB1dGVyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-			},
+			product: null,
 			productQuantity: 1
 		}
 	},
 	watch: {
-		productQuantity(val) {
-			console.log(val)
-			if (val !== '' && (isNaN(val) || val <= 0 || val > 99)) {
-				this.productQuantity = 1
-			}
+		productQuantity() {
+			this.validProductQuantity()
 		}
 	},
 	methods: {
 		addToCart() {
-			if (!this.productQuantity) this.productQuantity = 1
-			console.log({...this.product}, this.productQuantity)
+			this.addProductToOrder(this.product, this.productQuantity)
 		},
 		modifyProductQuantity(quantity = 1) {
 			this.productQuantity += quantity
 		},
 		calculateProductPrice() {
-			return this.product.price * (this.productQuantity ? this.productQuantity : 1)
+			return this.product.price * this.productQuantity
+		},
+		validProductQuantity() {
+			if (this.productQuantity !== '' && (isNaN(this.productQuantity) || this.productQuantity <= 0 || this.productQuantity > 99)) {
+				this.productQuantity = 1
+			}
 		}
 	}
 }
@@ -184,6 +194,7 @@ export default {
 	height: 100%;
 	color: white;
 	border: none;
+	transition: .1s ease;
 }
 .product-quantity-modifier:hover {
 	font-size: 2rem;
@@ -219,7 +230,7 @@ export default {
 	}
 
 	.product-quantity-container {
-		width: auto;
+		width: 60%;
 	}
 
 	.product-price-quantity-container {
