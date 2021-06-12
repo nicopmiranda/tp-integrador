@@ -46,12 +46,14 @@ Existen tres roles dentro de la aplicación: **Invitado**, **Usuario** y **Admin
 ### Ejecución
 - **BackEnd:**
     - npm start (entorno de producción)
+    - npm run build (construir lo que necesita el entorno de producción para usar los recursos del FrontEnd)
     - npm run startDev (entorno de desarrollo)
-    - npm run lint (para el análisis del código)
 - **FrontEnd:**
     - cd web/
         - npm run build (entorno de producción)
+        - npm run buildDev (entorno de desarrollo). Construye el 
         - npm run serve (entorno de desarrollo)
+        - npm run lint (para el análisis del código)
 
 
 ## Endpoints

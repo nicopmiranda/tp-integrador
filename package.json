@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "npm run build && node ./bin/www",
     "build": "cd ./web && npm i && npm run build",
-    "postinstall": "node exitIfNotProduction.js && npm run build",
     "startDev": "nodemon ./bin/www"
   },
   "dependencies": {

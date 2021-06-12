@@ -1,7 +1,10 @@
 <template>
 	<section class="product-detail-section">
 		<div class="container-fluid">
-			<div v-if="product" class="product-card">
+			<div v-if="!product" class="alert alert-info p-2">
+				<p>Searching product data...</p>
+			</div>
+			<div v-else-if="product._id" class="product-card">
 				<div class="product-image-container">
 					<img
 						:src="product.imageUrl"
@@ -64,7 +67,7 @@
 					</div>
 				</div>
 			</div>
-			<div v-else class="alert alert-warning">
+			<div v-else class="alert alert-danger p-2">
 				<p>Product not found</p>
 			</div>
 		</div>
@@ -108,7 +111,7 @@ export default {
 			return this.product.price * this.productQuantity
 		},
 		validProductQuantity() {
-			if (!this.productQuantity || (isNaN(this.productQuantity) || this.productQuantity <= 0 || this.productQuantity > 99)) {
+			if (this.productQuantity !== '' && (isNaN(this.productQuantity) || this.productQuantity <= 0 || this.productQuantity > 99)) {
 				this.productQuantity = 1
 			}
 		}

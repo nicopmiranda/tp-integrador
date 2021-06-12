@@ -5,7 +5,6 @@ import auth from '../middleware/auth.js';
 let router = express.Router();
 
 router.get('/', async function (req, res) {
-	res.set('Access-Control-Allow-Origin', '*')
 	const products = await dataProduct.getProducts();
 	if (products) {
 		res.json(products);
@@ -15,12 +14,11 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/:id', async (req, res) => {
-	res.set('Access-Control-Allow-Origin', '*')
 	const product = await dataProduct.getProduct(req.params.id);
 	if (product) {
 		res.json(product);
 	} else {
-		res.status(404).send('Producto no encontrados');
+		res.status(404).send('Producto no encontrado');
 	}
 });
 

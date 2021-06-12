@@ -27,16 +27,16 @@ export const localMixinOrder = {
         },
         async findProductById(id) {
             try {
-                const result = await this.axios.get(`http://localhost:4000/api/products/${id}`)
+                const result = await this.axios.get(`/api/products/${id}`)
                 return result.data
             } catch(err) {
-                return null
+                return {}
             }
         },
         async getProducts() {
             let result = []
             try {
-                result = await this.axios.get('http://localhost:4000/api/products/')
+                result = await this.axios.get('/api/products/')
                 return result.data
             } catch (err) {
                 return result
