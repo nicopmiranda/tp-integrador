@@ -19,7 +19,7 @@ const routes = [
     { path: '/register', component: TheRegister },
     { path: '/cart', component: TheCart },
     { path:'/product-details/:productId', component: ProductDetail, props: true},
-    { path: '/checkout', component: CheckOut }
+    { path: '/checkout', component: CheckOut },
     { path: '*', redirect: '/home' }
 
 ]
