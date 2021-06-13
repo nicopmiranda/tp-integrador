@@ -4,58 +4,24 @@ import TheHome from './components/TheHome'
 import TheContact from './components/TheContact'
 import TheRegister from './components/TheRegister'
 import CheckOut from './components/CheckOut/index.vue'
+import Products from './components/Products/index.vue'
+import TheCart from './components/TheCart'
+
+import ProductDetail from './components/ProductDetail'
 
 Vue.use(VueRouter)
 
 const routes = [
-    {
-        path: '/',
-        redirect: '/home'
-    },
-    {
-        path: '/home',
-        component: TheHome
-    },
-    {
-        path: '/inicio',
-        redirect: '/home'
-    },
-    {
-        path: '/contact',
-        component: TheContact
-    },
-    {
-        path: '/contacto',
-        redirect: '/contact'
-    },
-    {
-        path: '/register',
-        component: TheRegister
-    },
-    {
-        path: '/registro',
-        redirect: '/register'
-    },
-    {
-        path: '/signup',
-        redirect: '/register'
-    },
-    {
-        path: '/login',
-        redirect: '/register'
-    },
-    {
-        path: '/signin',
-        redirect: '/register'
-    },
-    {
-        path: '*',
-        redirect: '/home'
-    },
-    {
-        path: '/checkout',
-        component: CheckOut
-    }
+    { path: '/', redirect: '/home'},
+    { path: '/home', component: TheHome },
+    { path: '/products', component: Products },
+    { path: '/contact', component: TheContact },
+    { path: '/register', component: TheRegister },
+    { path: '/cart', component: TheCart },
+    { path:'/product-details/:productId', component: ProductDetail, props: true},
+    { path: '/checkout', component: CheckOut }
+    { path: '*', redirect: '/home' }
+
 ]
 
 const router = new VueRouter({

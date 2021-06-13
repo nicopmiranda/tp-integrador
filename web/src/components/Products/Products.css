@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+}
+
+.navbar-search {
+    display: flex;
+}
+.navbar-search-field {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: none !important;
+}
+.navbar-search-submit {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: none;
+}

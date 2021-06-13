@@ -15,15 +15,29 @@ export default {
     name: 'App',
     components: {
         TheHeader
+    },
+    created() {
+        if (!localStorage.getItem('order')) {
+            localStorage.setItem('order', JSON.stringify({
+                items: [],
+                price: 0
+            }))
+        }
     }
 }
 </script>
 
 <style>
 :root {
-  --primary-color: rgb(17, 0, 95);
-  --secondary-color: rgb(243, 233, 179);
-  --text-shadow-hover: 0 0 4px rgb(97, 97, 97);
+  --primary-color: rgb(224, 108, 0);
+  --secondary-color: rgb(39, 39, 39);
+  --text-shadow-hover: 0 0 2px rgb(224, 108, 0);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #app {
@@ -31,6 +45,8 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    min-height: 100vh;
 }
 </style>
