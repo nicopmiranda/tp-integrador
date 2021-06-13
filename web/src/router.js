@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import TheHome from './components/TheHome'
 import TheContact from './components/TheContact'
 import TheRegister from './components/TheRegister'
+import CheckOut from './components/CheckOut/index.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,10 @@ const routes = [
     {
         path: '*',
         redirect: '/home'
+    },
+    {
+        path: '/checkout',
+        component: CheckOut
     }
 ]
 
