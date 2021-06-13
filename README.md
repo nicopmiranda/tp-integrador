@@ -43,6 +43,11 @@ Existen tres roles dentro de la aplicación: **Invitado**, **Usuario** y **Admin
 - _Recomendado_: tener Postman para probar las peticiones a la API y agregar a la variable de ambiente PATH tanto nodejs como el bin de MongoDB.
 - _Sugerencia_: si se agrega la variable PORT al .env se puede modificar el puerto utilizado para correr el BackEnd.
 
+### Desarrollo
+#### FrontEnd
+- Estilos:
+    - Para los colores de la aplicación, usar las variables declaradas en App.vue de la siguiente manera: <code>var(--primary-color)</code> y <code>var(--secondary-color)</code>
+
 ### Ejecución
 - **BackEnd:**
     - <code>npm start</code> (entorno de producción).
