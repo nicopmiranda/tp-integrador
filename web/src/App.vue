@@ -15,20 +15,6 @@ export default {
     name: 'App',
     components: {
         TheHeader
-    },
-    created() {
-        if (!localStorage.getItem('order')) {
-            localStorage.setItem('order', JSON.stringify({
-                items: [],
-                subTotal: 0,
-                total: 0,
-                shippingTotal: 0,
-                promotion: 'No aplica',
-                paymentMethod: {
-                    type: 'No seleccionado'
-                }
-            }))
-        }
     }
 }
 </script>
