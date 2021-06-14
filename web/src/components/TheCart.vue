@@ -20,12 +20,19 @@
 					<div class="product-options">
 						<div class="product-options-details">
 							<div>
-								<label for="product-quantity" class="product-option-label">Cantidad:</label>
+								<p class="product-option-label">Cantidad:</p>
 								<p class="product-option-label">Precio:</p>
 							</div>
 							<div>
-								<input id="product-quantity" type="text" class="product-option-value"/>
-								<p class="product-option-value">${{ item.product.price }}</p>
+								<quantity-selector
+									class="product-option-value"
+									:initialQuantity="item.quantity"
+									:validQuantityAction="'validProductQuantity'"
+									:quantityGetter="'productQuantity'"
+								></quantity-selector>
+								<p class="product-option-value">
+									${{ item.product.price }}
+								</p>
 							</div>
 						</div>
 						<div class="product-option-delete">
@@ -41,17 +48,21 @@
 			</div>
 		</div>
 		<div v-else class="alert alert-warning">
-			<p>The cart is empty!</p>
+			<p>El carrito está vacío!</p>
 		</div>
 	</section>
 </template>
 
 <script>
+import QuantitySelector from './QuantitySelector'
 import { localMixinOrder } from '../localMixins';
 
 export default {
 	name: 'the-cart',
 	mixins: [localMixinOrder],
+	components: {
+		QuantitySelector
+	},
 	data() {
 		return {
 			cart: this.getOrder()
@@ -76,11 +87,20 @@ export default {
 
 .cart-list {
 	padding: 1rem;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	gap: 1rem;
 }
 
 .cart-box {
 	display: flex;
 	justify-content: space-between;
+	padding: 1rem;
+}
+
+.cart-list .cart-box:not(:nth-child(1)) {
+	border-top: 1px solid white;
 }
 
 .product-info {
@@ -100,21 +120,23 @@ export default {
 	display: grid;
 	grid-template-areas: 'details delete';
 	align-items: center;
+	width: 40%;
 }
 
 .product-options-details {
-    grid-area: details;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    text-align: left;
+	grid-area: details;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	text-align: left;
 }
 
 .product-option-label {
 	grid-column: 1 / 2;
+	padding-right: 0.5rem;
 }
 
 .product-option-value {
-	grid-column: 2 / 3;
+	grid-column: 2 / 4;
 }
 
 .product-option-delete {

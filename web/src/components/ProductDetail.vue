@@ -30,31 +30,13 @@
 								${{ calculateProductPrice() }}
 							</h4>
 						</div>
-						<div class="product-quantity-container">
-							<button
-								class="
-									product-quantity-modifier
-									product-quantity-modifier-left
-								"
-								@click="modifyProductQuantity(-1)"
-							>
-								-
-							</button>
-							<input
-								type="text"
-								v-model="productQuantity"
-								class="product-quantity-value"
-							/>
-							<button
-								class="
-									product-quantity-modifier
-									product-quantity-modifier-right
-								"
-								@click="modifyProductQuantity(1)"
-							>
-								+
-							</button>
-						</div>
+						<quantity-selector
+							class="product-quantity-container"
+							:initialQuantity="initialProductQuantity"
+							:validQuantityAction="'validProductQuantity'"
+							:quantityGetter="'productQuantity'"
+							@select-quantity="selectQuantity"
+						></quantity-selector>
 					</div>
 					<div>
 						<button
@@ -75,7 +57,8 @@
 </template>
 
 <script>
-import { localMixinOrder } from '../localMixins'
+import { localMixinOrder } from '../localMixins';
+import QuantitySelector from './QuantitySelector.vue';
 
 export default {
 	name: 'product-detail',
@@ -86,37 +69,37 @@ export default {
 			required: true
 		}
 	},
+	components: {
+		QuantitySelector
+	},
 	async created() {
-		this.product = await this.findProductById(this.productId)
+		this.product = await this.findProductById(this.productId);
 	},
 	data() {
 		return {
+			initialProductQuantity: 1,
 			product: null,
-			productQuantity: 1
-		}
+			productQuantity: this.initialProductQuantity
+		};
 	},
 	watch: {
 		productQuantity() {
-			this.validProductQuantity()
+			this.calculateProductPrice();
 		}
 	},
 	methods: {
 		addToCart() {
-			this.addProductToOrder(this.product, this.productQuantity)
-		},
-		modifyProductQuantity(quantity = 1) {
-			this.productQuantity += quantity
+			const quantity = this.$store.getters.productQuantity;
+			this.addProductToOrder(this.product, quantity);
 		},
 		calculateProductPrice() {
-			return this.product.price * this.productQuantity
+			return this.product.price * this.productQuantity;
 		},
-		validProductQuantity() {
-			if (this.productQuantity !== '' && (isNaN(this.productQuantity) || this.productQuantity <= 0 || this.productQuantity > 99)) {
-				this.productQuantity = 1
-			}
+		selectQuantity(quantity) {
+			this.productQuantity = quantity
 		}
 	}
-}
+};
 </script>
 
 <style scoped>
@@ -126,14 +109,14 @@ export default {
 }
 
 .product-detail-section {
-	padding: 3rem;
+	padding: 3rem 4rem;
 }
 
 .product-card {
 	display: flex;
 	-ms-flex-direction: column;
 	flex-direction: column;
-	gap: 4rem;
+	gap: 2rem;
 }
 
 .product-image-container {
@@ -141,7 +124,7 @@ export default {
 }
 
 .product-image {
-	width: 100%;
+	width: 75%;
 }
 
 .product-info {
@@ -170,50 +153,25 @@ export default {
 }
 
 .product-quantity-container {
-	--border-default: 1px solid white;
-	display: flex;
-	justify-content: flex-end;
 	height: 100%;
 	width: 60%;
-	border: var(--border-default);
-}
-
-.product-quantity-value {
-	text-align: center;
-	border: none;
-	width: 50%;
-	background-color: transparent;
-	height: 100%;
-	color: white;
-	outline: none;
-}
-
-.product-quantity-modifier {
-	background-color: transparent;
-	width: 25%;
-	height: 100%;
-	color: white;
-	border: none;
-	transition: .1s ease;
-}
-.product-quantity-modifier:hover {
-	font-size: 2rem;
-}
-
-.product-quantity-modifier-left {
-	border-right: var(--border-default);
-}
-.product-quantity-modifier-right {
-	border-left: var(--border-default);
 }
 
 @media only screen and (min-width: 576px) {
+	.product-image {
+		width: 50%;
+	}
+
 	.product-quantity-container {
 		width: 50%;
 	}
 }
 
 @media only screen and (min-width: 768px) {
+	.product-image {
+		width: 100%;
+	}
+
 	.product-card {
 		display: flex;
 		-ms-flex-direction: row;
@@ -245,8 +203,16 @@ export default {
 }
 
 @media only screen and (min-width: 1024px) {
+	.product-image {
+		width: 75%;
+	}
+
 	.product-detail-section {
 		padding: 5rem;
+	}
+
+	.product-quantity-container {
+		width: 40%;
 	}
 }
 </style>

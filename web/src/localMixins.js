@@ -1,12 +1,25 @@
 export const localMixinOrder = {
     methods: {
         addProductToOrder(product, quantity) {
+            console.log('product:', product)
             const order = this.getOrder()
-            order.items.push({
-                product,
-                quantity,
-                total: product.price * quantity
-            })
+            let itemFound = null
+            let i = order.items.length - 1
+            while (!itemFound && i >= 0) {
+                const currentItem = order.items[i]
+                itemFound = currentItem.product._id === product._id
+                if (itemFound) {
+                    currentItem.quantity += quantity
+                    currentItem.total = currentItem.product.price * quantity
+                } else {
+                    order.items.push({
+                        product,
+                        quantity,
+                        total: product.price * quantity
+                    })
+                    i--
+                }
+            }
             this.updateOrder(order)
         },
         getOrder() {

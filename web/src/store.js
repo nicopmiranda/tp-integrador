@@ -1,22 +1,33 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        contador: 1
-    },
-    actions: {
-        modifyCounter({commit}, cant) {
-            console.log('action, modifyCounter', cant)
-            commit('increment', cant)
+	state: {
+		productQuantity: 1
+	},
+	getters: {
+		productQuantity: (state) => {
+			return state.productQuantity;
+		}
+	},
+	actions: {
+        validProductQuantity({ commit }, quantity) {
+            commit('validProductQuantity', quantity)
         }
-    },
-    mutations: {
-        increment(state, cant) {
-            console.log('mutation, modifyCounter', state, cant)
-            state.contador += cant
+	},
+	mutations: {
+        validProductQuantity(state, quantity = 1) {
+            if (!validProductQuantity(quantity)) {
+                state.productQuantity = 1
+            } else {
+                state.productQuantity = quantity
+            }
         }
-    }
-})
+	}
+});
+
+function validProductQuantity(quantity) {
+	return !(quantity !== '' && (isNaN(quantity) || quantity <= 0 || quantity > 99))
+}
