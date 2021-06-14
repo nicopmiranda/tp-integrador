@@ -1,46 +1,98 @@
 export const localMixinOrder = {
-    methods: {
-        addProductToOrder(product, quantity) {
+	methods: {
+		addProductToOrder(product, quantity, incrementQuantity = false) {
+			const order = this.getOrder();
+			let itemFound = false;
+			let i = order.items.length - 1;
+			while (!itemFound && i >= 0) {
+				if (order.items[i].product._id === product._id) {
+                    itemFound = true
+					order.items[i].quantity = incrementQuantity ? order.items[i].quantity + quantity : quantity;
+					order.items[i].total = order.items[i].product.price * quantity;
+				}
+                i--
+			}
+            if (!itemFound) {
+                order.items.push({
+                    product,
+                    quantity,
+                    total: product.price * quantity
+                });
+            }
+			this.updateOrder(order);
+		},
+        deleteProductFromOrder(product) {
             const order = this.getOrder()
-            order.items.push({
-                product,
-                quantity,
-                total: product.price * quantity
-            })
+            const indexOfItem = order.items.findIndex(item => item.product._id === product._id)
+            if (indexOfItem >= 0) {
+                order.items.splice(indexOfItem, 1)
+            }
             this.updateOrder(order)
         },
-        getOrder() {
-            const order = localStorage.getItem('order')
-            try {
-                return JSON.parse(order)
-            } catch (err) {
-                return order
-            }
+        applyPromotionToOrder(promotion = null) {
+            const order = this.getOrder()
+            order.promotion = promotion ? promotion : 'No aplica'
+            this.updateOrder(order)
         },
-        updateOrder(order) {
-            if (order) {
-                localStorage.setItem('order', JSON.stringify(order))
-            }
+        calculateOrderSubtotal(order) {
+            order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
+            order.subtotal *= order.promotion ? 0.9 : 1
+            return order
         },
-        clearOrder() {
-            localStorage.removeItem('orderDetail')
-        },
-        async findProductById(id) {
-            try {
-                const result = await this.axios.get(`/api/products/${id}`)
-                return result.data
-            } catch(err) {
-                return {}
+		getOrder() {
+			let order = localStorage.getItem('order');
+            if (!order) {
+                order = this.createOrder()
+            } else {
+                try {
+                    order = JSON.parse(order);
+                    this.updateOrder(order)
+                } catch {
+                    order = this.createOrder()
+                }
             }
+            return order
+		},
+        createOrder() {
+            const order = {
+                items: [],
+                subtotal: 0,
+                total: 0,
+                shippingTotal: 0,
+                promotion: 'No aplica',
+                paymentMethod: {
+                    type: 'No seleccionado'
+                }
+            };
+            localStorage.setItem('order', JSON.stringify(order));
+            return order
         },
-        async getProducts() {
-            let result = []
-            try {
-                result = await this.axios.get('/api/products/')
-                return result.data
-            } catch (err) {
-                return result
-            }
-        }
-    }
-}
+		updateOrder(order) {
+			if (order) {
+                order = this.calculateOrderSubtotal(order)
+				localStorage.setItem('order', JSON.stringify(order));
+			}
+		},
+		clearOrder() {
+			localStorage.removeItem('order');
+            this.createOrder()
+		},
+		async findProductById(id) {
+			try {
+				const result = await this.axios.get(`/api/products/${id}`);
+				return result.data;
+			} catch (err) {
+				return {};
+			}
+		},
+		async getProducts() {
+			let result = [];
+			try {
+				result = await this.axios.get('/api/products/');
+				return result.data;
+			} catch (err) {
+				return result;
+			}
+		}
+	}
+};

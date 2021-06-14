@@ -15,14 +15,6 @@ export default {
     name: 'App',
     components: {
         TheHeader
-    },
-    created() {
-        if (!localStorage.getItem('order')) {
-            localStorage.setItem('order', JSON.stringify({
-                items: [],
-                price: 0
-            }))
-        }
     }
 }
 </script>
