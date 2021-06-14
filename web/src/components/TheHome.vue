@@ -2,8 +2,8 @@
 
 	<section class="src-components-the-home">
 		<div class="row">
-    <div class="col-lg-12 d-none d-lg-block mb-1">
-        <div id="carouselCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+    <div class="col-12 d-block mb-1">
+        <div id="carouselCaptions" class="carousel slide carousel-fade h-100" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselCaptions" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselCaptions" data-slide-to="1"></li>
@@ -11,24 +11,24 @@
             </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="font-weight-bold text-white">Los mejores cuidados para tu sangre</h5>
-                              <a class="btn btn-danger">Registrarse ahora</a>
+                        <img class="d-block w-100" src="https://i.postimg.cc/NGJf1xnw/First-slide.jpg" />
+                        <div class="carousel-caption d-block">
+                            <h5 class="font-weight-bold text-white">Agregá tu futuro al carrito</h5>
+                            <router-link to="/products" class="btn btn-primary">Productos</router-link>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="" />
-                        <div class="carousel-caption d-none d-md-block">
+                        <img class="d-block w-100" src="https://i.postimg.cc/RhzmZTQJ/MVP-second-slide.jpg" />
+                        <div class="carousel-caption d-block">
                             <h5 class="font-weight-bold text-white">¿Querés conocer un poco más acerca de nosotros?</h5>
-                            <a class="btn btn-danger">Laboratorio VladTepes</a>
+                            <router-link to="/contact" class="btn btn-primary">Contacto</router-link>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="" />
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="font-weight-bold text-white">Si ya te hiciste análisis ingresá para ver tus resultados!</h5>
-                                <a class="btn btn-danger">Ingresar</a>
+                        <img class="d-block w-100" src="https://i.postimg.cc/wMS6LppM/Third-slide.jpg" />
+                        <div class="carousel-caption d-block">
+                            <h5 class="font-weight-bold text-white">Registrate y comprá con nosotros</h5>
+                            <router-link to="/register" class="btn btn-primary">Registrarse</router-link>
                         </div>
                     </div>
                 </div>
@@ -73,5 +73,13 @@
 
 <style scoped lang="css">
 .src-components-the-home {
+}
+
+.carousel{
+  height: 50vh;
+}
+
+img {
+  height: 60rem;
 }
 </style>
