@@ -43,18 +43,28 @@ Existen tres roles dentro de la aplicación: **Invitado**, **Usuario** y **Admin
 - _Recomendado_: tener Postman para probar las peticiones a la API y agregar a la variable de ambiente PATH tanto nodejs como el bin de MongoDB.
 - _Sugerencia_: si se agrega la variable PORT al .env se puede modificar el puerto utilizado para correr el BackEnd.
 
+### Desarrollo
+#### FrontEnd
+- Estilos:
+    - Para los colores de la aplicación, usar las variables declaradas en App.vue de la siguiente manera: <code>var(--primary-color)</code> y <code>var(--secondary-color)</code>
+
 ### Ejecución
 - **BackEnd:**
-    - npm start (entorno de producción)
-    - npm run build (construir lo que necesita el entorno de producción para usar los recursos del FrontEnd)
-    - npm run startDev (entorno de desarrollo)
+    - <code>npm start</code> (entorno de producción).
+    - <code>npm run build</code> (construir lo que necesita el entorno de producción para usar los recursos del FrontEnd).
+    - <code>npm run startDev</code> (entorno de desarrollo). Url: http://localhost:{PORT}. Donde {PORT} puede ser una variable de entorno configurada en el archivo .env o 3000, que es el valor por defecto con el que se inicia el servidor en caso de no haber configurada una variable de entorno.
 - **FrontEnd:**
-    - cd web/
-        - npm run build (entorno de producción)
-        - npm run buildDev (entorno de desarrollo). Construye el 
-        - npm run serve (entorno de desarrollo)
-        - npm run lint (para el análisis del código)
+    - <code>**cd web/**</code>
+        - <code>npm run build</code> (entorno de producción).
+        - <code>npm run serve</code> (entorno de desarrollo).
+        - <code>npm run lint</code> (para el análisis del código).
+        - <code>npm run buildDev</code> (entorno de desarrollo para trabajar en conjunto con el Back). Construye una carpeta con el nombre 'dist' en /web/ cada vez que se actualice el código del Front para que el servidor (corriendo con el script 'npm run startDev') tome los recursos estáticos desde esa carpeta.
 
+Para trabajar en un entorno de desarrollo de manera conjunta entre el Back y el Front, correr los scripts:
+1) <code>npm run startDev</code>
+2) Abrir otra terminal / consola.
+3) <code>cd web/</code>
+4) <code>npm run buildDev</code>
 
 ## Endpoints
 - GET /users
