@@ -41,7 +41,7 @@
                   <h5 class="card-title">{{product.name}}</h5>
                   <p class="card-text">${{product.price}}</p>
                   <router-link :to="`/product-details/${product._id}`" class="btn btn-success btn-sm">Ver Detalle</router-link>
-                  <a href="#" class="btn btn-primary btn-sm">Agregar al carrito</a>
+                  <button @click="addProductToOrder(product, 1, true)" class="btn btn-primary btn-sm" title="Agregar 1 unidad de este producto al carrito">Agregar al carrito</button>
                 </div>
               </div>
             </div>

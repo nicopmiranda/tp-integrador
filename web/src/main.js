@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './form'
 import './axios'
+import './filters'
 import router from './router'
 import store from './store'
 
