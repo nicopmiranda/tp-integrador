@@ -1,13 +1,13 @@
 <template>
-	<div class="jumbotron">
-		<div class="formulario-de-registro">
-			<h1>Formulario de registro</h1>
+	<div class="jumbotron row d-flex justify-content-between p-5">
+		<div class="col-5">
+			<h3>Formulario de registro</h3>
 			<br />
-
-			<vue-form :state="formState" @submit.prevent="enviar()">
-				<div class="col-4">
+			<vue-form :state="formState" @submit.prevent="register()">
+				<div class="col-12 form-container">
 					<!-- campo nombre -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="nombre"></label>
 						<input
 							type="text"
@@ -54,9 +54,10 @@
 						</field-messages>
 					</validate>
 					<br />-->
-
+					</div>
 					<!-- campo apellido -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="apellido"></label>
 						<input
 							type="text"
@@ -77,10 +78,10 @@
 						</field-messages>
 					</validate>
 					<br />
-                    -->
-
+                    --></div>
 					<!-- campo contraseña -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="contraseña"></label>
 						<input
 							type="text"
@@ -104,8 +105,10 @@
 					</validate>
 
 					<br />-->
+					</div>
 					<!-- campo repetir contraseña -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="repetirContraseña"></label>
 						<input
 							type="text"
@@ -114,7 +117,7 @@
 							class="form-control"
 							autocomplete="off"
 							v-model.trim="formData.repetirContraseña"
-							placeholder="Repetir constraseña"
+							placeholder="Repetir contraseña"
 							required
 						/>
 						<!-- mensajes de validación 
@@ -137,9 +140,10 @@
 						</field-messages>
 					</validate>
 					<br />-->
-
+					</div>
 					<!-- campo email -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="email"></label>
 						<input
 							type="email"
@@ -165,9 +169,11 @@
 						</field-messages>
 					</validate>
 					<br />-->
+					</div>
 
 					<!-- campo nombre de usuario -->
-					<validate tag="div">
+					<!-- <validate tag="div"> -->
+					<div>
 						<label for="nombreUsuario"></label>
 						<input
 							type="text"
@@ -175,6 +181,7 @@
 							name="nombreUsuario"
 							class="form-control"
 							autocomplete="off"
+							placeholder="Nombre de usuario"
 							v-model.trim="formData.nombreUsuario"
 							required
 							:minlength="nombreLengthMin"
@@ -216,21 +223,41 @@
 						</field-messages>
 					</validate>
 					<br />
-                    -->
+                    --></div>
 				</div>
-				<div class="col-5">
+				<div class="col-12">
 					<div class="row justify-content-md-center">
 						<button
-							class="btn btn-primary my-3"
+							class="btn btn-primary my-3 w-100"
 							:disabled="formState.$invalid"
 							type="submit"
 						>
-							Finalzar registro
+							Finalizar registro
 						</button>
 					</div>
 				</div>
 			</vue-form>
 		</div>
+        <div class="col-5">
+            <h3>Login</h3>
+            <form class="col-12 border border-light p-3 text-left">
+                <div v-if="invalidLoginCredentials && formLoginData.username && formLoginData.password" class="alert alert-danger">
+                    <p>Credenciales inválidas!</p>
+                </div>
+                <div class="form-group d-flex flex-column my-4">
+                    <label for="login-user">Nombre de usuario</label>
+                    <input type="text" class="form-control" placeholder="Nombre de usuario" v-model="formLoginData.username">
+                </div>
+                <div class="form-group d-flex flex-column my-4">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" class="form-control" placeholder="Contraseña" v-model="formLoginData.password">
+                </div>
+                <div class="form-group d-flex flex-column my-4">
+                    <button class="btn btn-primary w-50" @click="login">Login</button>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
 	</div>
 </template>
 
@@ -242,6 +269,8 @@ export default {
 	data() {
 		return {
 			formData: this.getInicialData(),
+            formLoginData: this.getInitialLoginData(),
+            invalidLoginCredentials: false,
 			formState: {},
 			nombreLengthMin: 3,
 			nombreLengthMax: 15,
@@ -263,17 +292,43 @@ export default {
 				email: ''
 			};
 		},
+        getInitialLoginData() {
+            return {
+                username: '',
+                password: ''
+            }
+        },
 
-		enviar() {
+		async register() {
 			console.log({ ...this.formData });
+
+			const result = await this.axios.post('/api/users/', {});
+			console.log('r', result);
 			this.formData = this.getInicialData();
 			this.formState._reset();
-		}
+		},
+        async login(evt) {
+            evt.preventDefault();
+            let result = null
+            try {
+                result = await this.axios.post('/api/users/login', {...this.formLoginData})
+                if (result.status === 200) {
+                    this.$router.push('/home')
+                }
+            } catch(err) {
+                console.log('Invalid credentials')
+            }
+            this.invalidLoginCredentials = true
+        }
 	}
 };
 </script>
 
 <style scoped>
+* {
+    margin: 0;
+}
+
 .jumbotron {
 	background-color: rgb(39 39 39);
 }
@@ -290,7 +345,7 @@ h1 {
 	color: rgb(224, 108, 0);
 }
 
-.col-4 {
+.form-container {
 	column-count: 2;
 }
 </style>

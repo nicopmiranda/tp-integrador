@@ -8,7 +8,7 @@ export const localMixinOrder = {
 				if (order.items[i].product._id === product._id) {
                     itemFound = true
 					order.items[i].quantity = incrementQuantity ? order.items[i].quantity + quantity : quantity;
-					order.items[i].total = order.items[i].product.price * quantity;
+					order.items[i].total = order.items[i].product.price * order.items[i].quantity;
 				}
                 i--
 			}
@@ -36,7 +36,7 @@ export const localMixinOrder = {
         },
         calculateOrderSubtotal(order) {
             order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
-            order.subtotal *= order.promotion ? 0.9 : 1
+            // order.subtotal *= order.promotion ? 0.9 : 1
             return order
         },
 		getOrder() {

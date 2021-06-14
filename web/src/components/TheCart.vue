@@ -129,11 +129,22 @@ export default {
 			this.cart = this.getOrder();
 		},
 		applyPromotion() {
-			this.applyPromotionToOrder(this.promotion);
-			this.updateCart();
+			console.log('applyPromotion')
+			// this.applyPromotionToOrder(this.promotion);
+			// this.updateCart();
 		},
-		goToCheckout() {
-			console.log('goToCheckout')
+		async goToCheckout() {
+			try {
+				const result = await this.axios.get('/api/users/valid/isloggedin')
+				console.log(result.data)
+				if (result.data) {
+					this.$router.push('/checkout')
+				} else {
+					this.$router.push('/register')
+				}
+			} catch {
+				console.log('ERROR')
+			}
 		}
 	}
 };
