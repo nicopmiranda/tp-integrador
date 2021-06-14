@@ -22,7 +22,7 @@
 							:maxlength="nombreLengthMax"
 							no-espacios
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación
 						<field-messages name="nombre" show="$dirty">
 							<div
 								slot="required"
@@ -53,7 +53,7 @@
 							</div>
 						</field-messages>
 					</validate>
-					<br />
+					<br />-->
 
 					<!-- campo apellido -->
 					<validate tag="div">
@@ -68,7 +68,7 @@
 							placeholder="Apellido"
 							required
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación 
 						<field-messages name="apellido" show="$dirty">
 							<div
 								slot="required"
@@ -77,6 +77,7 @@
 						</field-messages>
 					</validate>
 					<br />
+                    -->
 
 					<!-- campo contraseña -->
 					<validate tag="div">
@@ -91,7 +92,7 @@
 							placeholder="Contraseña"
 							required
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación
 						<field-messages name="contraseña" show="$dirty">
 							<div
 								slot="required"
@@ -102,7 +103,7 @@
 						</field-messages>
 					</validate>
 
-					<br />
+					<br />-->
 					<!-- campo repetir contraseña -->
 					<validate tag="div">
 						<label for="repetirContraseña"></label>
@@ -116,7 +117,7 @@
 							placeholder="Repetir constraseña"
 							required
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación 
 						<field-messages name="repetirContraseña" show="$dirty">
 							<div
 								slot="required"
@@ -135,7 +136,7 @@
 							</div>
 						</field-messages>
 					</validate>
-					<br />
+					<br />-->
 
 					<!-- campo email -->
 					<validate tag="div">
@@ -150,7 +151,7 @@
 							placeholder="Email"
 							required
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación 
 						<field-messages name="email" show="$dirty">
 							<div
 								slot="required"
@@ -163,9 +164,9 @@
 							</div>
 						</field-messages>
 					</validate>
-					<br />
+					<br />-->
 
-					<!-- campo nombre de -->
+					<!-- campo nombre de usuario -->
 					<validate tag="div">
 						<label for="nombreUsuario"></label>
 						<input
@@ -180,7 +181,7 @@
 							:maxlength="nombreLengthMax"
 							no-espacios
 						/>
-						<!-- mensajes de validación -->
+						<!-- mensajes de validación
 						<field-messages name="nombreUsuario" show="$dirty">
 							<div
 								slot="required"
@@ -215,6 +216,7 @@
 						</field-messages>
 					</validate>
 					<br />
+                    -->
 				</div>
 				<div class="col-5">
 					<div class="row justify-content-md-center">
