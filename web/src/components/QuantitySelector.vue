@@ -35,8 +35,8 @@ export default {
 	},
 	data() {
 		return {
-			quantity: this.initialQuantity,
-			quantityInput: this.quantity,
+			quantity: this.initialQuantity ? this.initialQuantity : 1,
+			quantityInput: this.initialQuantity ? this.initialQuantity : 1,
 			quantitySentToValidate: false
 		};
 	},

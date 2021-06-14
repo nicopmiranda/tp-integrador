@@ -27,7 +27,7 @@
 					<div class="product-price-quantity-container">
 						<div>
 							<h4 class="product-price">
-								${{ calculateProductPrice() }}
+								${{ calculatedProductPrice }}
 							</h4>
 						</div>
 						<quantity-selector
@@ -78,22 +78,19 @@ export default {
 	data() {
 		return {
 			initialProductQuantity: 1,
+			productQuantity: 1,
 			product: null,
-			productQuantity: this.initialProductQuantity
 		};
 	},
-	watch: {
-		productQuantity() {
-			this.calculateProductPrice();
+	computed: {
+		calculatedProductPrice() {
+			return this.product.price * this.productQuantity;
 		}
 	},
 	methods: {
 		addToCart() {
 			const quantity = this.$store.getters.productQuantity;
-			this.addProductToOrder(this.product, quantity);
-		},
-		calculateProductPrice() {
-			return this.product.price * this.productQuantity;
+			this.addProductToOrder(this.product, quantity, true);
 		},
 		selectQuantity(quantity) {
 			this.productQuantity = quantity

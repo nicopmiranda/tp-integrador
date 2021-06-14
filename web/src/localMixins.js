@@ -1,15 +1,16 @@
 export const localMixinOrder = {
 	methods: {
-		addProductToOrder(product, quantity) {
+		addProductToOrder(product, quantity, incrementQuantity = false) {
 			const order = this.getOrder();
 			let itemFound = false;
 			let i = order.items.length - 1;
 			while (!itemFound && i >= 0) {
 				if (order.items[i].product._id === product._id) {
                     itemFound = true
-					order.items[i].quantity += quantity;
+					order.items[i].quantity = incrementQuantity ? order.items[i].quantity + quantity : quantity;
 					order.items[i].total = order.items[i].product.price * quantity;
 				}
+                i--
 			}
             if (!itemFound) {
                 order.items.push({
@@ -17,10 +18,17 @@ export const localMixinOrder = {
                     quantity,
                     total: product.price * quantity
                 });
-                i--;
             }
 			this.updateOrder(order);
 		},
+        deleteProductFromOrder(product) {
+            const order = this.getOrder()
+            const indexOfItem = order.items.findIndex(item => item.product._id === product._id)
+            if (indexOfItem >= 0) {
+                order.items.splice(indexOfItem, 1)
+            }
+            this.updateOrder(order)
+        },
 		getOrder() {
 			let order = localStorage.getItem('order');
             if (!order) {
@@ -28,6 +36,7 @@ export const localMixinOrder = {
             } else {
                 try {
                     order = JSON.parse(order);
+                    this.updateOrder(order)
                 } catch {
                     order = this.createOrder()
                 }
@@ -37,7 +46,7 @@ export const localMixinOrder = {
         createOrder() {
             const order = {
                 items: [],
-                subTotal: 0,
+                subtotal: 0,
                 total: 0,
                 shippingTotal: 0,
                 promotion: 'No aplica',
@@ -50,6 +59,7 @@ export const localMixinOrder = {
         },
 		updateOrder(order) {
 			if (order) {
+                order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
 				localStorage.setItem('order', JSON.stringify(order));
 			}
 		},
