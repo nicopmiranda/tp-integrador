@@ -1,6 +1,13 @@
 <template>
 	<section class="section-cart-container">
 		<div v-if="cart && cart.items.length > 0" class="section-cart">
+			<div class="row d-flex justify-content-end">
+				<div class="col-2">
+					<button class="btn btn-danger" @click="emptyCart">
+						Vaciar carrito
+					</button>
+				</div>
+			</div>
 			<div class="cart-list">
 				<div
 					v-for="(item, index) in cart.items"
@@ -19,13 +26,12 @@
 					</div>
 					<div class="product-options">
 						<div class="product-options-details">
-							<div>
-								<p class="product-option-label">Cantidad:</p>
-								<p class="product-option-label">Precio:</p>
+							<div class="product-option-label">
+								<p>Cantidad:</p>
+								<p>Precio:</p>
 							</div>
-							<div>
+							<div class="product-option-value">
 								<quantity-selector
-									class="product-option-value"
 									:initialQuantity="item.quantity"
 									:validQuantityAction="'validProductQuantity'"
 									:quantityGetter="'productQuantity'"
@@ -33,9 +39,7 @@
 										selectQuantity(item.product, $event)
 									"
 								></quantity-selector>
-								<p class="product-option-value">
-									${{ item.product.price }}
-								</p>
+								<p>${{ item.product.price }}</p>
 							</div>
 						</div>
 						<div class="product-option-delete">
@@ -57,7 +61,13 @@
 						placeholder="Aplicar promoción"
 						v-model="promotion"
 					/>
-					<button class="btn btn-primary" type="button" @click="applyPromotion">Aplicar</button>
+					<button
+						class="btn btn-primary"
+						type="button"
+						@click="applyPromotion"
+					>
+						Aplicar
+					</button>
 				</div>
 				<div class="col-4 details-container">
 					<div>
@@ -65,14 +75,18 @@
 						<p class="detail-label">Promoción:</p>
 					</div>
 					<div>
-						<p class="detail-value">${{ cart.subtotal | currency }}</p>
+						<p class="detail-value">
+							${{ cart.subtotal | currency }}
+						</p>
 						<p class="detail-value">{{ cart.promotion }}</p>
 					</div>
 				</div>
 			</div>
 			<div class="row d-flex justify-content-end">
 				<div class="col-4">
-					<button class="btn btn-success w-100">Checkout</button>
+					<button class="btn btn-success w-100" @click="goToCheckout">
+						Checkout
+					</button>
 				</div>
 			</div>
 		</div>
@@ -107,11 +121,19 @@ export default {
 			this.deleteProductFromOrder(product);
 			this.updateCart();
 		},
+		emptyCart() {
+			this.clearOrder();
+			this.updateCart();
+		},
 		updateCart() {
 			this.cart = this.getOrder();
 		},
 		applyPromotion() {
-
+			this.applyPromotionToOrder(this.promotion);
+			this.updateCart();
+		},
+		goToCheckout() {
+			console.log('goToCheckout')
 		}
 	}
 };
@@ -171,6 +193,7 @@ export default {
 	grid-template-areas: 'details delete';
 	align-items: center;
 	width: 40%;
+	gap: 1rem;
 }
 
 .product-options-details {

@@ -29,6 +29,16 @@ export const localMixinOrder = {
             }
             this.updateOrder(order)
         },
+        applyPromotionToOrder(promotion = null) {
+            const order = this.getOrder()
+            order.promotion = promotion ? promotion : 'No aplica'
+            this.updateOrder(order)
+        },
+        calculateOrderSubtotal(order) {
+            order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
+            order.subtotal *= order.promotion ? 0.9 : 1
+            return order
+        },
 		getOrder() {
 			let order = localStorage.getItem('order');
             if (!order) {
@@ -59,12 +69,13 @@ export const localMixinOrder = {
         },
 		updateOrder(order) {
 			if (order) {
-                order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
+                order = this.calculateOrderSubtotal(order)
 				localStorage.setItem('order', JSON.stringify(order));
 			}
 		},
 		clearOrder() {
-			localStorage.removeItem('orderDetail');
+			localStorage.removeItem('order');
+            this.createOrder()
 		},
 		async findProductById(id) {
 			try {
