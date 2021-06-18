@@ -192,21 +192,13 @@
               <ul v-for="order in orderItems">
                 <li>Producto {{order.product.name}}: ${{order.product.price}} x {{order.quantity}}</li>
                 <hr>
-<<<<<<< HEAD
-                <li>Subtotal: $$</li>
-                <li>Promoción: {{aplicarCupon()}}</li>
-                <li>Precio de envío: $$</li>
-                <li>Direccion de envío: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
-                <li>Método de pago: {{verificarCheck()}}</li>
-=======
               </ul>
               <ul v-model="order">
                 <li>Subtotal: ${{order.subtotal}}</li>
-                <li>Promocion: No aplica</li>
-                <li>Precio de envio: $ </li>
-                <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
-                <li>Metodo de pago: {{verificarCheck()}}</li>
->>>>>>> 5579b14fa1da22440b57089d49275630b7a2eca9
+                <li>Promoción: No aplica</li>
+                <li>Precio de envío: $ </li>
+                <li>Dirección de envío: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
+                <li>Método de pago: {{verificarCheck()}}</li>
                 <li>TOTAL: $$</li>
               </ul>
             </div>
