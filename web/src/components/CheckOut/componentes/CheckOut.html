@@ -189,14 +189,14 @@
           <div class="card mb-3" style="max-width: 25rem;">
             <div class="card-header" id="headerDetalle">Detalles de la orden</div>
             <div class="card-body">
-              <ul>
-                <li>Producto 1: precio x cantidad</li>
-                <li>Producto 2: precio x cantidad</li>
-                <li>Producto 3: precio x cantidad</li>
+              <ul v-for="order in orderItems">
+                <li>Producto {{order.product.name}}: ${{order.product.price}} x {{order.quantity}}</li>
                 <hr>
-                <li>Subtotal: $$</li>
-                <li>Promocion: {{aplicarCupon()}}</li>
-                <li>Precio de envio: $$</li>
+              </ul>
+              <ul v-model="order">
+                <li>Subtotal: ${{order.subtotal}}</li>
+                <li>Promocion: No aplica</li>
+                <li>Precio de envio: $ </li>
                 <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
                 <li>Metodo de pago: {{verificarCheck()}}</li>
                 <li>TOTAL: $$</li>

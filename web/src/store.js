@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { localMixinOrder } from './localMixins'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		productQuantity: 1
+		productQuantity: 1,
+		cartTotalQuantity: localMixinOrder.methods.calculateOrderTotalQuantity()
 	},
 	getters: {
 		productQuantity: (state) => {
@@ -15,7 +17,10 @@ export default new Vuex.Store({
 	actions: {
         validProductQuantity({ commit }, quantity) {
             commit('validProductQuantity', quantity)
-        }
+        },
+		modifyCartTotalQuantity({ commit }, quantity, increment = true) {
+			commit('modifyCartTotalQuantity', quantity, increment)
+		}
 	},
 	mutations: {
         validProductQuantity(state, quantity = 1) {
@@ -24,7 +29,14 @@ export default new Vuex.Store({
             } else {
                 state.productQuantity = quantity
             }
-        }
+        },
+		modifyCartTotalQuantity(state, quantity, increment) { 
+			if (increment) {
+				state.cartTotalQuantity += quantity; 
+			} else {
+				state.cartTotalQuantity = quantity;
+			}
+		}
 	}
 });
 

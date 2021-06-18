@@ -1,5 +1,7 @@
+import { localMixinOrder } from '../../../localMixins'
 export default  {
     name: 'src-components-check-out',
+    mixins: [localMixinOrder],
     props: [],
     mounted () {
 
@@ -12,7 +14,9 @@ export default  {
         codigo: null,
         checkEfectivo: false,
         checkOnline: false,
-        nroTarjeta: ''
+        nroTarjeta: '',
+        orderItems: this.getOrder().items, 
+        order: this.getOrder()
       }
     },
     
