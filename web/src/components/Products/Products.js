@@ -12,6 +12,17 @@ export default {
       searchResult: ''
     }
   },
+  method: {
+		async getProducts() {
+			let result = [];
+			try {
+				result = await this.axios.get('/api/products/');
+				return result.data;
+			} catch (err) {
+				return result;
+			}
+		}
+  },
   computed: {
     filteredProducts() {
         if (this.searchResult.length > 0) {
