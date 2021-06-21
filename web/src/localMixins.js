@@ -8,7 +8,7 @@ export const localMixinOrder = {
 				if (order.items[i].product._id === product._id) {
                     itemFound = true
 					order.items[i].quantity = incrementQuantity ? order.items[i].quantity + quantity : quantity;
-					order.items[i].total = order.items[i].product.price * quantity;
+					order.items[i].total = order.items[i].product.price * order.items[i].quantity;
 				}
                 i--
 			}
@@ -36,8 +36,13 @@ export const localMixinOrder = {
         },
         calculateOrderSubtotal(order) {
             order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
-            order.subtotal *= order.promotion ? 0.9 : 1
+            // order.subtotal *= order.promotion ? 0.9 : 1
             return order
+        },
+        calculateOrderTotalQuantity(order) {
+            if (!order) order = this.getOrder()
+            let orderTotalQuantity = order.items.reduce((accumulator, item) => accumulator + item.quantity, 0)
+            return orderTotalQuantity;
         },
 		getOrder() {
 			let order = localStorage.getItem('order');
@@ -46,6 +51,7 @@ export const localMixinOrder = {
             } else {
                 try {
                     order = JSON.parse(order);
+                    console.log(order)
                     this.updateOrder(order)
                 } catch {
                     order = this.createOrder()
@@ -70,6 +76,7 @@ export const localMixinOrder = {
 		updateOrder(order) {
 			if (order) {
                 order = this.calculateOrderSubtotal(order)
+                this.$store.dispatch('modifyCartTotalQuantity', this.calculateOrderTotalQuantity(order), false)
 				localStorage.setItem('order', JSON.stringify(order));
 			}
 		},

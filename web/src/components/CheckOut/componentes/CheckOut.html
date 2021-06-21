@@ -12,13 +12,13 @@
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Codigo Promocional
+                  Código Promocional
                 </button>
               </h2>
             </div>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
-                <label>Aplicar codigo promocional:</label>
+                <label>Aplicar código promocional:</label>
                 <input  class="w3-input w3-border " type="text" id="codigo" name="codigo" v-model="codigo" required>
                 <input  type="button" class="buttonAplicar" value="Aplicar"  v-on:click="vaciarCodigo()"> 
               </div>
@@ -30,7 +30,7 @@
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
                 <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                  Direccion de Envio
+                  Dirección de Envío
                 </button>
               </h2>
             </div>
@@ -74,7 +74,7 @@
 
                     <div class="col">
                     <validate tag="div">  
-                      <label for="codigoPostal">Codigo Postal</label>
+                      <label for="codigoPostal">Código Postal</label>
                       <input type="number" id="codigoPostal" name="codigoPostal" class="form-control" v-model="formDataEnvio.codigoPostal" required>
                       <field-messages name="codigoPostal" show="$dirty">
                         <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
@@ -92,7 +92,7 @@
             <div class="card-header" id="headingThree">
               <h2 class="mb-0">
                 <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                  Direccion de Facturacion
+                  Dirección de Facturación
                 </button>
               </h2>
             </div>
@@ -138,7 +138,7 @@
             <div class="card-header" id="headingFour">
               <h2 class="mb-0">
                 <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                  Metodo de Pago
+                  Método de Pago
                 </button>
               </h2>
             </div>
@@ -171,10 +171,10 @@
                         <h4>Online</h4>
                       </label>
                     </div>
-                    <small>Puedes pagar con tarjetas de debito y credito</small>
+                    <small>Puedes pagar con tarjetas de débito y crédito</small>
                     <div class="input-group mb-3">
                       <input  class="w3-input w3-border form-control " type="number" placeholder="Ingrese un numero de tarjeta" id="nroTarjeta" name="nroTarjeta" v-model="nroTarjeta" disabled>
-                      <input type="button" id="botonTarjeta" class="form-control" aria-label="tarjeta" aria-describedby="tarjeta" value="Agrega nueva tarjeta" @click='agregarTarjeta()'>
+                      <input type="button" id="botonTarjeta" class="form-control" aria-label="tarjeta" aria-describedby="tarjeta" value="Agregá nueva tarjeta" @click='agregarTarjeta()'>
                     </div>
                   </div>
                 </div>
@@ -189,16 +189,16 @@
           <div class="card mb-3" style="max-width: 25rem;">
             <div class="card-header" id="headerDetalle">Detalles de la orden</div>
             <div class="card-body">
-              <ul>
-                <li>Producto 1: precio x cantidad</li>
-                <li>Producto 2: precio x cantidad</li>
-                <li>Producto 3: precio x cantidad</li>
+              <ul v-for="order in orderItems">
+                <li>Producto {{order.product.name}}: ${{order.product.price}} x {{order.quantity}}</li>
                 <hr>
-                <li>Subtotal: $$</li>
-                <li>Promocion: {{aplicarCupon()}}</li>
-                <li>Precio de envio: $$</li>
-                <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
-                <li>Metodo de pago: {{verificarCheck()}}</li>
+              </ul>
+              <ul v-model="order">
+                <li>Subtotal: ${{order.subtotal}}</li>
+                <li>Promoción: No aplica</li>
+                <li>Precio de envío: $ </li>
+                <li>Dirección de envío: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
+                <li>Método de pago: {{verificarCheck()}}</li>
                 <li>TOTAL: $$</li>
               </ul>
             </div>
