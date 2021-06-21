@@ -3,7 +3,10 @@
 		<nav class="navbar navbar-expand-md px-1">
 			<div class="navbar-header">
 				<a class="navbar-brand">
-					<img src="/favicon.ico" alt="Logo" class="logo-img" />
+					<img
+						src="/favicon.ico"
+						alt="Logo"
+						class="logo-img" />
 				</a>
 				<navbar-search class="navbar-header-search"></navbar-search>
 				<div class="navbar-header-options">
@@ -12,18 +15,12 @@
 					</router-link>
 					<i class="fas fa-user header-icon"></i>
 					<icon-toggler
-						class="
-							fas
-							fa-bars
-							header-icon
-							nav-options-toggler-navigation
-						"
+						class="fas fa-bars header-icon nav-options-toggler-navigation"
 						toggle="collapse"
 						target="#navbarHiddenNavContainer"
 						controls="navbarHiddenNavContainer"
 						expanded="false"
-						label="Toggle Navigation"
-					></icon-toggler>
+						label="Toggle Navigation"></icon-toggler>
 				</div>
 				<div class="navbar-header-togglers">
 					<icon-toggler
@@ -33,53 +30,53 @@
 						controls="navbarHiddenSearch"
 						expanded="false"
 						label="Toggle Search Input"
-						@click.native="toggleSearch"
-					></icon-toggler>
+						@click.native="toggleSearch"></icon-toggler>
 					<icon-toggler
-						class="
-							fas
-							fa-bars
-							header-icon
-							navbar-toggler-navigation
-						"
+						class="fas fa-bars header-icon navbar-toggler-navigation"
 						toggle="collapse"
 						target="#navbarHiddenNavContainer"
 						controls="navbarHiddenNavContainer"
 						expanded="false"
-						label="Toggle Navigation"
-					></icon-toggler>
+						label="Toggle Navigation"></icon-toggler>
 				</div>
 			</div>
 			<div class="navbar-body">
 				<navbar-search
 					v-if="showSearchInput"
 					class="navbar-body-search collapse navbar-collapse"
-					id="navbarHiddenSearch"
-				></navbar-search>
+					id="navbarHiddenSearch"></navbar-search>
 				<div
 					class="navbar-nav-container collapse navbar-collapse"
-					id="navbarHiddenNavContainer"
-				>
+					id="navbarHiddenNavContainer">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<router-link to="/home" class="nav-link"
-								>Inicio</router-link
-							>
+							<router-link to="/home" class="nav-link">
+								Inicio
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/products" class="nav-link"
-								>Productos</router-link
-							>
+							<router-link to="/products" class="nav-link">
+								Productos
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/contact" class="nav-link"
-								>Contacto</router-link
-							>
+							<router-link to="/contact" class="nav-link">
+								Contacto
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/register" class="nav-link"
-								>Registrarse</router-link
-							>
+							<router-link
+								v-if="!isLoggedIn()"
+								to="/register"
+								class="nav-link">
+								Registrarse
+							</router-link>
+							<a v-else
+								href="/home"
+								class="nav-link"
+								@click="logout">
+								Cerrar sesión
+							</a>
 						</li>
 					</ul>
 					<div class="navbar-nav-options">
@@ -95,8 +92,8 @@
 </template>
 
 <script>
-import NavbarSearch from './NavbarSearch'
-import IconToggler from './IconToggler'
+import NavbarSearch from './NavbarSearch';
+import IconToggler from './IconToggler';
 
 export default {
 	name: 'TheHeader',
@@ -107,26 +104,36 @@ export default {
 	data() {
 		return {
 			showSearchInput: false
-		}
+		};
 	},
 	mounted() {
 		window.addEventListener('resize', () => {
 			if (
 				document.documentElement.clientWidth >= this.getScreenWidthMd()
 			) {
-				this.showSearchInput = false
+				this.showSearchInput = false;
 			}
-		})
+		});
 	},
 	methods: {
+		isLoggedIn() {
+			let loggedIn = false;
+			if (sessionStorage.authToken) {
+				loggedIn = true;
+			}
+			return loggedIn;
+		},
+		logout(evt) {
+			console.log(evt);
+		},
 		getScreenWidthMd() {
-			return 576
+			return 576;
 		},
 		toggleSearch() {
-			this.showSearchInput = !this.showSearchInput
+			this.showSearchInput = !this.showSearchInput;
 		}
 	}
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -135,7 +142,7 @@ header {
 	position: sticky;
 	top: 0;
 	border-bottom: 1px solid var(--primary-color);
-    z-index: 1000;
+	z-index: 1000;
 }
 
 .navbar {
