@@ -262,8 +262,11 @@
 </template>
 
 <script>
+import { localMixinUser } from '../localMixins'
+
 export default {
 	name: 'TheRegister',
+	mixins: [localMixinUser],
 	components: {},
 	props: [],
 	data() {
@@ -278,8 +281,11 @@ export default {
 			notaMax: 10
 		};
 	},
-	computed: {},
-	mounted() {},
+	created() {
+		if (this.isUserLoggedIn()) {
+			this.$router.push('/home')
+		}
+	},
 	methods: {
 		getInicialData() {
 			return {
@@ -313,7 +319,8 @@ export default {
             try {
                 result = await this.axios.post('/api/users/login', {...this.formLoginData})
                 if (result.status === 200) {
-                    this.$router.push('/home')
+					this.$store.dispatch('setAuthToken', result.data.token)
+                    this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home')
                 }
             } catch(err) {
                 console.log('Invalid credentials')
