@@ -3,124 +3,135 @@
     <h1 style="color: orange">CHECK OUT</h1>
     <br>
     <vue-form :state="formState" @submit.prevent="finalizarCompra()">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-8">
-        <div class="accordion" id="accordionExample">
-          <!-- PRIMER ACORDEON -->
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Codigo Promocional
-                </button>
-              </h2>
-            </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-                <label>Aplicar codigo promocional:</label>
-                <input  class="w3-input w3-border " type="text" id="codigo" name="codigo" v-model="codigo" required>
-                <input  type="button" class="buttonAplicar" value="Aplicar"  v-on:click="vaciarCodigo()"> 
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8">
+            <div class="accordion" id="accordionExample">
+              <!-- PRIMER ACORDEON -->
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Codigo Promocional
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <label>Aplicar codigo promocional:</label>
+                    <input class="w3-input w3-border " type="text" id="codigo" name="codigo" v-model="codigo" required>
+                    <input type="button" class="buttonAplicar" value="Aplicar" v-on:click="vaciarCodigo()">
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <!-- SEGUNDO ACORDEON -->
-          <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h2 class="mb-0">
-                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                  Direccion de Envio
-                </button>
-              </h2>
-            </div>
-            
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="card-body">
-                  <div class="row">
+              <!-- SEGUNDO ACORDEON -->
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      Direccion de Envio
+                    </button>
+                  </h2>
+                </div>
 
-                    <div class="col">
-                    <validate tag="div">
-                      <label for="calle">Calle</label>
-                      <input type="text" id="calle" name="calle" class="form-control" v-model="formDataEnvio.calle" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
-                      <field-messages name="calle" show="$dirty">
-                        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                      </field-messages>
-                    </validate>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="row">
+
+                      <div class="col">
+                        <validate tag="div">
+                          <label for="calle">Calle</label>
+                          <input type="text" id="calle" name="calle" class="form-control" v-model="formDataEnvio.calle"
+                            placeholder="ejemplo: Av Rivadavia 123 4toA" required>
+                          <field-messages name="calle" show="$dirty">
+                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+                          </field-messages>
+                        </validate>
+                      </div>
+
+                      <div class="col">
+                        <validate tag="div">
+                          <label for="localidad">Localidad</label>
+                          <input type="text" id="localidad" name="localidad" class="form-control"
+                            v-model="formDataEnvio.localidad" required>
+                          <field-messages name="localidad" show="$dirty">
+                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+                          </field-messages>
+                        </validate>
+                      </div>
                     </div>
 
-                    <div class="col">
-                    <validate tag="div">
-                      <label for="localidad">Localidad</label>
-                      <input type="text" id="localidad" name="localidad" class="form-control" v-model="formDataEnvio.localidad" required>
-                      <field-messages name="localidad" show="$dirty">
-                        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                      </field-messages>
-                    </validate>
+                    <div class="row">
+
+                      <div class="col">
+                        <validate tag="div">
+                          <label for="barrio">Barrio</label>
+                          <input type="text" id="barrio" name="barrio" class="form-control"
+                            v-model="formDataEnvio.barrio" required>
+                          <field-messages name="barrio" show="$dirty">
+                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+                          </field-messages>
+                        </validate>
+                      </div>
+
+                      <div class="col">
+                        <validate tag="div">
+                          <label for="codigoPostal">Codigo Postal</label>
+                          <input type="number" id="codigoPostal" name="codigoPostal" class="form-control"
+                            v-model="formDataEnvio.codigoPostal" required>
+                          <field-messages name="codigoPostal" show="$dirty">
+                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+                          </field-messages>
+                        </validate>
+                      </div>
                     </div>
+
                   </div>
-
-                  <div class="row">
-
-                    <div class="col">
-                    <validate tag="div"> 
-                      <label for="barrio">Barrio</label>
-                      <input type="text" id="barrio" name="barrio" class="form-control" v-model="formDataEnvio.barrio" required>
-                      <field-messages name="barrio" show="$dirty">
-                        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                      </field-messages>
-                    </validate>
-                    </div>
-
-                    <div class="col">
-                    <validate tag="div">  
-                      <label for="codigoPostal">Codigo Postal</label>
-                      <input type="number" id="codigoPostal" name="codigoPostal" class="form-control" v-model="formDataEnvio.codigoPostal" required>
-                      <field-messages name="codigoPostal" show="$dirty">
-                        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                      </field-messages>
-                    </validate>
-                    </div>
-                  </div>
-               
+                </div>
               </div>
-            </div>
-          </div>
-          
-          <!-- TERCER ACORDEON -->
-          <div class="card">
-            <div class="card-header" id="headingThree">
-              <h2 class="mb-0">
-                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                  Direccion de Facturacion
-                </button>
-              </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <div class="card-body">
-                
-                  <div class="row">
-                    <div class="col">
-                      <label for="calleFactuarcion">Calle</label>
-                      <input type="text" id="calleFacturacion" name="calleFactuarcion" class="form-control" v-model="formDataFacturacion.calle" placeholder="ejemplo: Av Rivadavia 123 4toA" required>  
+
+              <!-- TERCER ACORDEON -->
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                      Direccion de Facturacion
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+
+                    <div class="row">
+                      <div class="col">
+                        <label for="calleFactuarcion">Calle</label>
+                        <input type="text" id="calleFacturacion" name="calleFactuarcion" class="form-control"
+                          v-model="formDataFacturacion.calle" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
+                      </div>
+                      <div class="col">
+                        <label for="localidad">Localidad</label>
+                        <input type="text" id="localidad" name="localidad" class="form-control"
+                          v-model="formDataFacturacion.localidad" required>
+                      </div>
                     </div>
-                    <div class="col">
-                      <label for="localidad">Localidad</label>
-                      <input type="text" id="localidad" name="localidad" class="form-control"  v-model="formDataFacturacion.localidad" required>
+                    <div class="row">
+                      <div class="col">
+                        <label for="barrio">Barrio</label>
+                        <input type="text" id="barrio" name="barrio" class="form-control"
+                          v-model="formDataFacturacion.barrio" required>
+                      </div>
+                      <div class="col">
+                        <label for="codigoPostal">Codigo Postal</label>
+                        <input type="number" id="codigoPostal" name="codigoPostal" class="form-control"
+                          v-model="formDataFacturacion.codigoPostal" required>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <label for="barrio">Barrio</label>
-                      <input type="text" id="barrio" name="barrio" class="form-control"  v-model="formDataFacturacion.barrio" required>
-                    </div>
-                    <div class="col">
-                      <label for="codigoPostal">Codigo Postal</label>
-                      <input type="number" id="codigoPostal" name="codigoPostal" class="form-control"  v-model="formDataFacturacion.codigoPostal" required>
-                    </div>
-                  </div>
-                
-               <!-- <hr>
+
+                    <!-- <hr>
                 <div class="form-check" v-if="formDataEnvio.calle != formState.$dirty " >
                   <input class="form-check-input" type="checkbox" id="checkDireccionFacturacion" >
                   <label class="form-check-label" for="checkDireccionFacturacion">
@@ -128,90 +139,97 @@
                   </label>
                 </div>
               -->
-                
-              </div>
-            </div>
-          </div>
-          
-          <!-- CUARTO ACORDEON -->
-          <div class="card">
-            <div class="card-header" id="headingFour">
-              <h2 class="mb-0">
-                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                  Metodo de Pago
-                </button>
-              </h2>
-            </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-              <div class="card-body">
-                <validate tag= "div">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="checkEfectivo" v-model="checkEfectivo" required> 
-                      <label class="form-check-label" for="checkEfectivo">
-                        <h4>En la entrega</h4>
-                      </label>
-                    </div>
-                    <br>
-                    <div class="input-group mb-3" id="inputEfectivo">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="efectivo">Efectivo</span>
-                      </div>
-                    
-                        <input type="number" class="form-control" placeholder="Ingrese un monto" aria-label="efectivo" aria-describedby="efectivo" required>
-             
-                    </div>
-                  </div>
 
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="checkOnline" id="checkOnline" v-model="checkOnline" required>
-                      <label class="form-check-label" for="checkOnline">
-                        <h4>Online</h4>
-                      </label>
-                    </div>
-                    <small>Puedes pagar con tarjetas de debito y credito</small>
-                    <div class="input-group mb-3">
-                      <input  class="w3-input w3-border form-control " type="number" placeholder="Ingrese un numero de tarjeta" id="nroTarjeta" name="nroTarjeta" v-model="nroTarjeta" disabled>
-                      <input type="button" id="botonTarjeta" class="form-control" aria-label="tarjeta" aria-describedby="tarjeta" value="Agrega nueva tarjeta" @click='agregarTarjeta()'>
-                    </div>
                   </div>
                 </div>
-              </validate>
+              </div>
+
+              <!-- CUARTO ACORDEON -->
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                      Metodo de Pago
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <validate tag="div">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="checkEfectivo" v-model="checkEfectivo"
+                              required>
+                            <label class="form-check-label" for="checkEfectivo">
+                              <h4>En la entrega</h4>
+                            </label>
+                          </div>
+                          <br>
+                          <div class="input-group mb-3" id="inputEfectivo">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="efectivo">Efectivo</span>
+                            </div>
+
+                            <input type="number" class="form-control" placeholder="Ingrese un monto"
+                              aria-label="efectivo" aria-describedby="efectivo" required>
+
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkOnline" id="checkOnline"
+                              v-model="checkOnline" required>
+                            <label class="form-check-label" for="checkOnline">
+                              <h4>Online</h4>
+                            </label>
+                          </div>
+                          <small>Puedes pagar con tarjetas de debito y credito</small>
+                          <div class="input-group mb-3">
+                            <input class="w3-input w3-border form-control " type="number"
+                              placeholder="Ingrese un numero de tarjeta" id="nroTarjeta" name="nroTarjeta"
+                              v-model="nroTarjeta" disabled>
+                            <input type="button" id="botonTarjeta" class="form-control" aria-label="tarjeta"
+                              aria-describedby="tarjeta" value="Agrega nueva tarjeta" @click='agregarTarjeta()'>
+                          </div>
+                        </div>
+                      </div>
+                    </validate>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card mb-3" style="max-width: 25rem;">
+              <div class="card-header" id="headerDetalle">Detalles de la orden</div>
+              <div class="card-body">
+                <ul>
+                  <li>Producto 1: precio x cantidad</li>
+                  <li>Producto 2: precio x cantidad</li>
+                  <li>Producto 3: precio x cantidad</li>
+                  <hr>
+                  <li>Subtotal: $$</li>
+                  <li>Promocion: {{aplicarCupon()}}</li>
+                  <li>Precio de envio: $$</li>
+                  <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}} {{formDataEnvio.barrio}}
+                  </li>
+                  <li>Metodo de pago: {{verificarCheck()}}</li>
+                  <li>TOTAL: $$</li>
+                </ul>
               </div>
             </div>
+
           </div>
-  
+
         </div>
-        </div>
-        <div class="col-4">
-          <div class="card mb-3" style="max-width: 25rem;">
-            <div class="card-header" id="headerDetalle">Detalles de la orden</div>
-            <div class="card-body">
-              <ul>
-                <li>Producto 1: precio x cantidad</li>
-                <li>Producto 2: precio x cantidad</li>
-                <li>Producto 3: precio x cantidad</li>
-                <hr>
-                <li>Subtotal: $$</li>
-                <li>Promocion: {{aplicarCupon()}}</li>
-                <li>Precio de envio: $$</li>
-                <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}}  {{formDataEnvio.barrio}} </li>
-                <li>Metodo de pago: {{verificarCheck()}}</li>
-                <li>TOTAL: $$</li>
-              </ul>
-            </div>
-          </div>
-       
-        </div>
-     
-    </div>
-    <button class="btn btn-danger my-3 " id="btnCancelar" type="submit">Cancelar</button>
-    <button class="btn btn-success my-3" :disabled="formState.$invalid" type="submit">Finalizar compra</button>
+        <button class="btn btn-danger my-3 " id="btnCancelar" type="submit">Cancelar</button>
+        <button class="btn btn-success my-3" :disabled="formState.$invalid" type="submit">Finalizar compra</button>
+      </div>
+    </vue-form>
   </div>
-</vue-form>
-</div>
-    
+
 </section>
-  
