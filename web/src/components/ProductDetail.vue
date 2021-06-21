@@ -1,8 +1,8 @@
 <template>
 	<section class="product-detail-section">
 		<div class="container-fluid">
-			<div v-if="!product" class="alert alert-info p-2">
-				<p>Searching product data...</p>
+			<div v-if="!product" class="spinner-border text-info" role="status">
+				<span class="sr-only">Searching...</span>
 			</div>
 			<div v-else-if="product._id" class="product-card">
 				<div class="product-image-container">

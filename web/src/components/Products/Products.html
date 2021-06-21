@@ -30,8 +30,8 @@
           </ul>
         </div>
         <div class="col-8">
-          <div v-if="!filteredProducts" class="alert alert-info">
-            <p>Searching products...</p>
+          <div v-if="!filteredProducts" class="spinner-border text-info" role="status">
+            <span class="sr-only">Searching...</span>
           </div>
           <div v-else-if="filteredProducts.length > 0" class="row row-cols-1 row-cols-md-3">
             <div v-for="product in filteredProducts" :key="product._id" class="col mb-4">

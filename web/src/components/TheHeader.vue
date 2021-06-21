@@ -7,7 +7,8 @@
 				</a>
 				<navbar-search class="navbar-header-search"></navbar-search>
 				<div class="navbar-header-options">
-					<router-link to="/cart">
+					<router-link to="/cart" class="cart-router">
+					<span class="cart-number badge badge-light">{{cartTotal}}</span>
 						<i class="fas fa-shopping-cart header-icon"></i>
 					</router-link>
 					<i class="fas fa-user header-icon"></i>
@@ -97,9 +98,11 @@
 <script>
 import NavbarSearch from './NavbarSearch'
 import IconToggler from './IconToggler'
+import { localMixinOrder } from '../localMixins'
 
 export default {
 	name: 'TheHeader',
+	mixins: [localMixinOrder],
 	components: {
 		NavbarSearch,
 		IconToggler
@@ -124,6 +127,11 @@ export default {
 		},
 		toggleSearch() {
 			this.showSearchInput = !this.showSearchInput
+		}
+	},
+	computed : {
+		cartTotal () {
+			return this.$store.state.cartTotalQuantity
 		}
 	}
 }
@@ -231,6 +239,20 @@ header {
 }
 .header-icon:hover {
 	text-shadow: var(--text-shadow-hover);
+}
+
+.cart-number {
+	padding: 2px;
+	line-height: 0.6;
+	position: absolute;
+	top: 10px;  /*agregar a historias de usuarios */
+    
+}
+
+.cart-router {
+	display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 @media only screen and (min-width: 576px) {
