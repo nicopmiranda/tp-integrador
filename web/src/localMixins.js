@@ -51,7 +51,6 @@ export const localMixinOrder = {
             } else {
                 try {
                     order = JSON.parse(order);
-                    console.log(order)
                     this.updateOrder(order)
                 } catch {
                     order = this.createOrder()
@@ -102,3 +101,19 @@ export const localMixinOrder = {
 		}
 	}
 };
+
+export const localMixinUser = {
+    computed: {
+        authToken() {
+            return this.$store.getters.authToken
+        }
+    },
+    methods: {
+        isUserLoggedIn() {
+            return this.$store.getters.authToken
+        },
+        logout() {
+            this.$store.dispatch('setAuthToken', null)
+        }
+    }
+}

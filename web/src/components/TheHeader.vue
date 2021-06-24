@@ -3,7 +3,10 @@
 		<nav class="navbar navbar-expand-md px-1">
 			<div class="navbar-header">
 				<a class="navbar-brand">
-					<img src="/favicon.ico" alt="Logo" class="logo-img" />
+					<img
+						src="/favicon.ico"
+						alt="Logo"
+						class="logo-img" />
 				</a>
 				<navbar-search class="navbar-header-search"></navbar-search>
 				<div class="navbar-header-options">
@@ -13,12 +16,7 @@
 					</router-link>
 					<i class="fas fa-user header-icon"></i>
 					<icon-toggler
-						class="
-							fas
-							fa-bars
-							header-icon
-							nav-options-toggler-navigation
-						"
+						class="fas fa-bars header-icon nav-options-toggler-navigation"
 						toggle="collapse"
 						target="#navbarHiddenNavContainer"
 						controls="navbarHiddenNavContainer"
@@ -35,12 +33,7 @@
 						label="Toggle Search Input"
 						@click.native="toggleSearch"></icon-toggler>
 					<icon-toggler
-						class="
-							fas
-							fa-bars
-							header-icon
-							navbar-toggler-navigation
-						"
+						class="fas fa-bars header-icon navbar-toggler-navigation"
 						toggle="collapse"
 						target="#navbarHiddenNavContainer"
 						controls="navbarHiddenNavContainer"
@@ -58,16 +51,33 @@
 					id="navbarHiddenNavContainer">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<router-link to="/home" class="nav-link">Inicio</router-link>
+							<router-link to="/home" class="nav-link">
+								Inicio
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/products" class="nav-link">Productos</router-link>
+							<router-link to="/products" class="nav-link">
+								Productos
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/contact" class="nav-link">Contacto</router-link>
+							<router-link to="/contact" class="nav-link">
+								Contacto
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link to="/register" class="nav-link">Registrarse</router-link>
+							<router-link
+								v-if="!isUserLoggedIn()"
+								to="/register"
+								class="nav-link">
+								Registrarse
+							</router-link>
+							<a v-else
+								href="/home"
+								class="nav-link"
+								@click="logout">
+								Cerrar sesión
+							</a>
 						</li>
 					</ul>
 					<div class="navbar-nav-options">
@@ -86,11 +96,11 @@
 <script>
 import NavbarSearch from './NavbarSearch';
 import IconToggler from './IconToggler';
-import { localMixinOrder } from '../localMixins';
+import { localMixinOrder, localMixinUser } from '../localMixins';
 
 export default {
 	name: 'TheHeader',
-	mixins: [localMixinOrder],
+	mixins: [localMixinOrder, localMixinUser],
 	components: {
 		NavbarSearch,
 		IconToggler

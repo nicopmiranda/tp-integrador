@@ -22,6 +22,10 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
+router.get('/go-to/checkout', auth.auth, (req, res) => {
+	res.send(true)
+})
+
 router.post('/', auth.authAdmin, async (req, res) => {
 	const schema = joi.object({
 		// Los campos name, description y brand van sin el alphanum() de joi para que se puedan contemplar espacios en la cadena

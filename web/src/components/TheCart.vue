@@ -9,11 +9,7 @@
 				</div>
 			</div>
 			<div class="cart-list">
-				<div
-					v-for="(item, index) in cart.items"
-					:key="index"
-					class="cart-box"
-				>
+				<div v-for="(item, index) in cart.items" :key="index" class="cart-box">
 					<div class="product-info">
 						<div class="product-img-container">
 							<img
@@ -35,9 +31,7 @@
 									:initialQuantity="item.quantity"
 									:validQuantityAction="'validProductQuantity'"
 									:quantityGetter="'productQuantity'"
-									@select-quantity="
-										selectQuantity(item.product, $event)
-									"
+									@select-quantity="selectQuantity(item.product, $event)"
 								></quantity-selector>
 								<p>{{ (item.product.price * item.quantity) | currency }}</p>
 							</div>
@@ -61,11 +55,7 @@
 						placeholder="Aplicar promoción"
 						v-model="promotion"
 					/>
-					<button
-						class="btn btn-primary"
-						type="button"
-						@click="applyPromotion"
-					>
+					<button class="btn btn-primary" type="button" @click="applyPromotion">
 						Aplicar
 					</button>
 				</div>
@@ -75,9 +65,7 @@
 						<p class="detail-label">Promoción:</p>
 					</div>
 					<div>
-						<p class="detail-value">
-							${{ cart.subtotal | currency }}
-						</p>
+						<p class="detail-value">${{ cart.subtotal | currency }}</p>
 						<p class="detail-value">{{ cart.promotion }}</p>
 					</div>
 				</div>
@@ -129,21 +117,26 @@ export default {
 			this.cart = this.getOrder();
 		},
 		applyPromotion() {
-			console.log('applyPromotion')
+			console.log('applyPromotion');
 			// this.applyPromotionToOrder(this.promotion);
 			// this.updateCart();
 		},
 		async goToCheckout() {
 			try {
-				const result = await this.axios.get('/api/users/valid/isloggedin')
-				console.log(result.data)
-				if (result.data) {
-					this.$router.push('/checkout')
-				} else {
-					this.$router.push('/register')
+				await this.axios.get(
+					'/api/products/go-to/checkout',
+					{
+						headers: {
+							'Authorization': `Bearer ${sessionStorage['authToken']}`
+						}
+					}
+				);
+				this.$router.push('/checkout');
+			} catch (err) {
+				if (err.request.status == 401) {
+					this.$store.dispatch('setAlertMessage', 'warning', 'Debe estar logueado para realizar una compra')
+					this.$router.push('/register/checkout')
 				}
-			} catch {
-				console.log('ERROR')
 			}
 		}
 	}
