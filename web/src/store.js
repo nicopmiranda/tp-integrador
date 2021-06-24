@@ -7,11 +7,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		productQuantity: 1,
-		cartTotalQuantity: localMixinOrder.methods.calculateOrderTotalQuantity()
+		cartTotalQuantity: localMixinOrder.methods.calculateOrderTotalQuantity(),
+		authToken: sessionStorage.getItem('authToken')
 	},
 	getters: {
 		productQuantity: (state) => {
 			return state.productQuantity;
+		},
+		authToken: (state) => {
+			return state.authToken
 		}
 	},
 	actions: {
@@ -20,6 +24,9 @@ export default new Vuex.Store({
         },
 		modifyCartTotalQuantity({ commit }, quantity, increment = true) {
 			commit('modifyCartTotalQuantity', quantity, increment)
+		},
+		setAuthToken({ commit }, token) {
+			commit('setAuthToken', token)
 		}
 	},
 	mutations: {
@@ -35,6 +42,15 @@ export default new Vuex.Store({
 				state.cartTotalQuantity += quantity; 
 			} else {
 				state.cartTotalQuantity = quantity;
+			}
+		},
+		setAuthToken(state, token) {
+			if (token && !sessionStorage.getItem('authToken')) {
+				sessionStorage.setItem('authToken', token)
+				state.authToken = token
+			} else {
+				sessionStorage.removeItem('authToken')
+				state.authToken = null
 			}
 		}
 	}
