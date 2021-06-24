@@ -19,7 +19,7 @@ app.use(
 				to: function (context) {
 					return context.parsedUrl.pathname;
 				},
-			},
+			}
 		],
 	})
 );
