@@ -17,6 +17,7 @@ const routes = [
     { path: '/products', component: Products },
     { path: '/contact', component: TheContact },
     { path: '/register', component: TheRegister },
+    { path: '/register/:goTo', component: TheRegister, props: true },
     { path: '/cart', component: TheCart },
     { path:'/product-details/:productId', component: ProductDetail, props: true},
     { path: '/checkout', component: CheckOut },
