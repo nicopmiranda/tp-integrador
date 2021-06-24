@@ -39,7 +39,7 @@
 										selectQuantity(item.product, $event)
 									"
 								></quantity-selector>
-								<p>${{ item.product.price }}</p>
+								<p>{{ (item.product.price * item.quantity) | currency }}</p>
 							</div>
 						</div>
 						<div class="product-option-delete">
