@@ -10,8 +10,7 @@
 				<vue-form :state="formState" @submit.prevent="register()">
 					<div class="col-12 form-container">
 						<!-- campo nombre -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="nombre"></label>
 							<input
 								type="text"
@@ -22,11 +21,12 @@
 								v-model.trim="formData.nombre"
 								required
 								placeholder="Nombre"
+							/>
+							<!-- 
 								:minlength="nombreLengthMin"
 								:maxlength="nombreLengthMax"
 								no-espacios
-							/>
-							<!-- mensajes de validación
+								mensajes de validación
 						<field-messages name="nombre" show="$dirty">
 							<div
 								slot="required"
@@ -55,13 +55,11 @@
 								Este campo debe tener como máximo
 								{{ nombreLengthMax }} caracteres
 							</div>
-						</field-messages>
+						</field-messages-->
 					</validate>
-					<br />-->
-						</div>
+					<!--br />-->
 						<!-- campo apellido -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="apellido"></label>
 							<input
 								type="text"
@@ -79,17 +77,15 @@
 								slot="required"
 								class="alert alert-danger mt-1"
 							></div>
-						</field-messages>
+						</field-messages-->
 					</validate>
-					<br />
-                    -->
-						</div>
+					<!--br /-->
+                    
 						<!-- campo contraseña -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="contraseña"></label>
 							<input
-								type="text"
+								type="password"
 								id="contraseña"
 								name="contraseña"
 								class="form-control"
@@ -106,17 +102,15 @@
 							>
 								Campo requerido
 							</div>
-						</field-messages>
+						</field-messages-->
 					</validate>
 
-					<br />-->
-						</div>
+					<!--br />-->
 						<!-- campo repetir contraseña -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="repetirContraseña"></label>
 							<input
-								type="text"
+								type="password"
 								id="repetirContraseña"
 								name="repetirContraseña"
 								class="form-control"
@@ -142,13 +136,11 @@
 							>
 								Las contraseñas no coinciden
 							</div>
-						</field-messages>
+						</field-messages-->
 					</validate>
-					<br />-->
-						</div>
+					<!--br />-->
 						<!-- campo email -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="email"></label>
 							<input
 								type="email"
@@ -171,14 +163,12 @@
 							<div slot="email" class="alert alert-danger mt-1">
 								Email no válido
 							</div>
-						</field-messages>
+						</field-messages-->
 					</validate>
-					<br />-->
-						</div>
+					<!--br />-->
 
 						<!-- campo nombre de usuario -->
-						<!-- <validate tag="div"> -->
-						<div>
+						<validate tag="div">
 							<label for="nombreUsuario"></label>
 							<input
 								type="text"
@@ -189,13 +179,14 @@
 								placeholder="Nombre de usuario"
 								v-model.trim="formData.nombreUsuario"
 								required
+							/>
+							<!--
 								:minlength="nombreLengthMin"
 								:maxlength="nombreLengthMax"
 								no-espacios
-							/>
-							<div slot="required" class="alert alert-danger mt-0">
+								div slot="required" class="alert alert-danger mt-0">
 								Campo requerido
-							</div>
+							</div-->
 							<!-- mensajes de validación
 						<field-messages name="nombreUsuario" show="$dirty">
 							<div
@@ -228,11 +219,9 @@
 								Este campo debe tener como máximo
 								{{ nombreLengthMax }} caracteres
 							</div>
-						</field-messages>
+						</field-messages-->
 					</validate>
-					<br />
-                    -->
-						</div>
+					<!--br /-->
 					</div>
 					<div class="col-12">
 						<div class="row justify-content-md-center">

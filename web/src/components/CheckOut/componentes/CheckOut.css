@@ -67,3 +67,18 @@ cursor: pointer;
   margin: 3.5px;
 }
 
+.radio-lg{
+  transform: scale(2);
+}
+
+h4{
+  color: var(--primary-color);
+}
+
+label{
+  color: var(--primary-color);
+}
+
+.jumbotron{
+  background-color: var(--secondary-color)
+}
