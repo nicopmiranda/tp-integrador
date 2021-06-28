@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken';
+console.log(jwt);
+
 export const localMixinOrder = {
 	methods: {
 		addProductToOrder(product, quantity, incrementQuantity = false) {

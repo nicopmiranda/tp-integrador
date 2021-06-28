@@ -10,6 +10,10 @@ router.get('/', auth.authAdmin, async function (req, res, next) {
 	res.send(users);
 });
 
+router.get('/validate', auth.auth, async function (req, res, next) {
+	res.send('Authenticated');
+});
+
 router.get('/:id', async (req, res) => {
 	const user = await dataUsers.getUser(req.params.id);
 	if (user) {

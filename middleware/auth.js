@@ -24,4 +24,4 @@ function authAdmin(req, res, next) {
 	}
 }
 
-export default { auth, authAdmin };
+export default { auth, authAdmin};

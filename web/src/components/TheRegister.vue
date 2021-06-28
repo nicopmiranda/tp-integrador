@@ -250,14 +250,8 @@
 			<div class="col-5">
 				<h3>Login</h3>
 				<form class="col-12 border border-light p-3 text-left">
-					<div
-						v-if="
-							invalidLoginCredentials &&
-							formLoginData.username &&
-							formLoginData.password
-						"
-						class="alert alert-danger"
-					>
+					<div v-if="invalidLoginCredentials && formLoginData.username &&
+							formLoginData.password"	class="alert alert-danger">
 						<p>Credenciales inválidas!</p>
 					</div>
 					<div class="form-group d-flex flex-column my-4">
@@ -351,13 +345,16 @@ export default {
 			}
 		},
         async login(evt) {
+			//Con esto no recarga la página.
             evt.preventDefault();
             let result = null
             try {
                 result = await this.axios.post('/api/users/login', {...this.formLoginData})
                 if (result.status === 200) {
-					this.$store.dispatch('setAuthToken', result.data.token)
+					//this.$store.dispatch('setUser', result.data.username);
+					this.$store.dispatch('setAuthToken', result.data.token);
                     this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home')
+					console.log(result.data.token)
                 }
             } catch(err) {
                 console.log('Invalid credentials')
