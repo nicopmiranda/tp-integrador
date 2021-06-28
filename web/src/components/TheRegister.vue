@@ -236,19 +236,22 @@
 					</div>
 				</vue-form>
 			</div>
-			<div class="col-5">
-				<h3>Login</h3>
-				<form class="col-12 border border-light p-3 text-left">
+			<div class="col-4">
+				<div class="row justifiy-content-start">
+					<div class="col-6">
+						<h3>Login</h3>
+					</div>
+				</div>
+				<form class="col-6 border border-light p-3 text-left">
 					<div v-if="invalidLoginCredentials && formLoginData.username &&
 							formLoginData.password"	class="alert alert-danger">
 						<p>Credenciales inválidas!</p>
 					</div>
 					<div class="form-group d-flex flex-column my-4">
-						<label for="login-user">Nombre de usuario</label>
+						<label for="login-user">Usuario</label>
 						<input
 							type="text"
 							class="form-control"
-							placeholder="Nombre de usuario"
 							v-model="formLoginData.username"
 						/>
 					</div>
@@ -257,12 +260,12 @@
 						<input
 							type="password"
 							class="form-control"
-							placeholder="Contraseña"
 							v-model="formLoginData.password"
 						/>
 					</div>
+					<br />
 					<div class="form-group d-flex flex-column my-4">
-						<button class="btn btn-primary w-50" @click="login">Login</button>
+						<button class="btn btn-primary w-50 ml-2" @click="login">Login</button>
 						<a href="#">¿Olvidaste tu contraseña?</a>
 					</div>
 				</form>
