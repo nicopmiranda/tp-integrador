@@ -12,14 +12,18 @@ export default new Vuex.Store({
 		user: {
 			username: '',
 			password: ''
-		}
+		},
+		attemptedLogin: false
 	},
 	getters: {
 		productQuantity: (state) => {
 			return state.productQuantity;
 		},
 		authToken: (state) => {
-			return state.authToken
+			return state.authToken;
+		},
+		loginAttempt: (state) =>{
+			return state.attemptedLogin;
 		}
 	},
 	actions: {
@@ -34,6 +38,9 @@ export default new Vuex.Store({
 		},
 		setUser({ commit }, user) {
 			commit('setAuthToken', user)
+		},
+		setLoginAttempt({ commit }, tried){
+			commit('setLoginAttempt', tried)
 		}
 	},
 	mutations: {
@@ -59,6 +66,9 @@ export default new Vuex.Store({
 				localStorage.removeItem('authToken')
 				state.authToken = null
 			}
+		},
+		setLoginAttempt(state, tried){
+			state.attemptedLogin = tried;
 		}/*,
 		setUser(state, user){
 

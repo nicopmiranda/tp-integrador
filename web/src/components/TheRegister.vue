@@ -1,6 +1,6 @@
 <template>
 	<div class="jumbotron p-4">
-		<div v-if="goTo === 'checkout'" class="alert alert-warning">
+		<div v-if="$store.getters.loginAttempt" class="alert alert-warning">
 			<p>Debe estar logueado para realizar una compra.</p>
 		</div>
 		<div class="row d-flex justify-content-between p-5">
@@ -312,6 +312,9 @@ export default {
 			this.$router.push('/home')
 		}
 	},
+	destroyed() {
+		this.$store.dispatch('setLoginAttempt', false);
+	},
 	methods: {
 		getInicialData() {
 			return {
@@ -388,5 +391,9 @@ h1 {
 
 .form-container {
 	column-count: 2;
+}
+
+p{
+	color: red;
 }
 </style>

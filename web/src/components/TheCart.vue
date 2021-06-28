@@ -135,8 +135,8 @@ export default {
 			}catch (error){
 				console.log(error);
 			}
-			this.$store.dispatch('setAlertMessage', 'warning', 'Debe estar logueado para realizar una compra')
-			this.$router.push('/register')
+			this.$store.dispatch('setLoginAttempt', true);
+			this.$router.push('/register');
 		}
 	}
 };
