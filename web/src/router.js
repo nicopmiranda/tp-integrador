@@ -15,6 +15,7 @@ const routes = [
     { path: '/', redirect: '/home'},
     { path: '/home', component: TheHome },
     { path: '/products', component: Products },
+    {path: '/products/:searchedValue', component: Products, props: true },
     { path: '/contact', component: TheContact },
     { path: '/register', component: TheRegister },
     { path: '/register/:goTo', component: TheRegister, props: true },

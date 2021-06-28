@@ -3,13 +3,19 @@ import { localMixinOrder } from "../../localMixins"
 export default {
   name: 'products',
   mixins: [localMixinOrder],
+  props: {searchedValue: {
+    type: String,
+    required: false
+  }},
   async created() {
+    // this.searchResult = this.searchedValue
+     console.log("seasrched value " +this.searchedValue);
     this.products = await this.getProducts()
   },
   data () {
     return {
       products: null,
-      searchResult: ''
+      searchResult: this.searchedValue ?  this.searchedValue : ''
     }
   },
   method: {
@@ -25,14 +31,14 @@ export default {
   },
   computed: {
     filteredProducts() {
-        if (this.searchResult.length > 0) {
+        if (this.searchResult.length > 0 && this.products) {
           return this.products.filter((product) => {
             let productName = `${product.name}`
             return productName.toLowerCase().includes(this.searchResult.toLowerCase())
           })
         }
         return this.products;
-    }
+    },
   }
 }
 
