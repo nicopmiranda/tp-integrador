@@ -83,7 +83,6 @@ export const localMixinOrder = {
 			}
 		},
 		clearOrder() {
-			localStorage.removeItem('order');
             this.createOrder()
 		},
 		async findProductById(id) {
