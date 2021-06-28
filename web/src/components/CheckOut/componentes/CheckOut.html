@@ -205,8 +205,6 @@
                 <ul v-for="order in orderItems">
                   <li>{{order.product.name}}: ${{order.product.price}} x {{order.quantity}}</li>
                   <hr>
-<<<<<<< HEAD
-=======
                   <li>Subtotal: $$</li>
                   <li>Promocion: {{aplicarCupon()}}</li>
                   <li>Precio de envio: $$</li>
@@ -214,7 +212,6 @@
                   </li>
                   <li>Metodo de pago: {{ getPaymentMethod }}</li>
                   <li>TOTAL: $$</li>
->>>>>>> f82aba37cb622dc6143c0296f4269e21dae4f386
                 </ul>
                 <ul v-model="order">
                 <li>Subtotal: ${{order.subtotal}}</li>
