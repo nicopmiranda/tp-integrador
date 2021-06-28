@@ -10,7 +10,7 @@
 				</a>
 				<navbar-search class="navbar-header-search"></navbar-search>
 				<div class="navbar-header-options">
-					<router-link to="/cart" class="cart-router">
+					<router-link to="/cart" class="cart-icon-container">
 						<span class="cart-number badge badge-light">{{cartTotal}}</span>
 						<i class="fas fa-shopping-cart header-icon"></i>
 					</router-link>
@@ -81,7 +81,8 @@
 						</li>
 					</ul>
 					<div class="navbar-nav-options">
-						<router-link to="/cart">
+						<router-link to="/cart" class="cart-icon-container cart-icon-container-options">
+							<span class="cart-number badge badge-light">{{cartTotal}}</span>
 							<i class="fas fa-shopping-cart header-icon"></i>
 						</router-link>
 						<i class="fas fa-user header-icon"></i>
@@ -238,6 +239,17 @@ header {
 	text-shadow: var(--text-shadow-hover);
 }
 
+.cart-icon-container {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	text-decoration: none;
+}
+
+.cart-icon-container.cart-icon-container-options {
+	position: relative;
+}
+
 .cart-number {
 	padding: 2px;
 	line-height: 0.6;
@@ -245,10 +257,9 @@ header {
 	top: 10px; /*agregar a historias de usuarios */
 }
 
-.cart-router {
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-end;
+.cart-icon-container-options .cart-number {
+	right: 0;
+	top: -5px;
 }
 
 @media only screen and (min-width: 576px) {

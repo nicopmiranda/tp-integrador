@@ -4,6 +4,7 @@ export default  {
     mixins: [localMixinOrder],
     props: [],
     mounted () {
+      
 
     },
     data () {
@@ -14,9 +15,12 @@ export default  {
         codigo: null,
         checkEfectivo: false,
         checkOnline: false,
-        nroTarjeta: '',
+        picked: false,
+        paymentMethod: '',
         orderItems: this.getOrder().items, 
-        order: this.getOrder()
+        order: this.getOrder(),
+        paymentForm: this.getDataPayment(),
+        paymentFormState: {}
       }
     },
     
@@ -28,6 +32,15 @@ export default  {
           barrio: '',
           codigoPostal: ''
          
+        }
+      },
+      getDataPayment (){
+        return{
+          cardHolderName: '',
+          cardNumber: '',
+          expiryMonth: '',
+          expiryYear: '',
+          cardCode: ''
         }
       },
 
@@ -88,11 +101,23 @@ export default  {
         this.formDataEnvio = this.getDataEnvio()
        // this.formDataFacturacion = this.getDataFacturacion()
         this.formState._reset()
+      },
+      savePayment(){
+        this.picked = true;
+        /*this.order.paymentCard.cardNumber = this.paymentForm.cardNumber;
+        this.order.paymentCard.expiryMonth = this.paymentForm.expiryMonth;
+        this.order.paymentCard.expiryYear = this.paymentForm.expiryYear;
+        this.order.paymentCard.cardCode = this.paymentForm.cardCode;*/
+      },
+      setPaymentMethod(paymentMethod){
+        this.paymentMethod = paymentMethod;
       }
 
     },
     computed: {
-
+      getPaymentMethod(){
+        return this.paymentMethod;
+      }
     }
 }
 

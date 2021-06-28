@@ -150,53 +150,48 @@
                   <h2 class="mb-0">
                     <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
                       data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                      Metodo de Pago
+                      Método de Pago
                     </button>
                   </h2>
                 </div>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                   <div class="card-body">
-                    <validate tag="div">
-                      <div class="row">
-                        <div class="col-6">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="checkEfectivo" v-model="checkEfectivo"
-                              required>
-                            <label class="form-check-label" for="checkEfectivo">
-                              <h4>En la entrega</h4>
-                            </label>
-                          </div>
-                          <br>
-                          <div class="input-group mb-3" id="inputEfectivo">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="efectivo">Efectivo</span>
-                            </div>
-
-                            <input type="number" class="form-control" placeholder="Ingrese un monto"
-                              aria-label="efectivo" aria-describedby="efectivo" required>
-
-                          </div>
-                        </div>
-
-                        <div class="col-6">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="checkOnline" id="checkOnline"
-                              v-model="checkOnline" required>
-                            <label class="form-check-label" for="checkOnline">
-                              <h4>Online</h4>
-                            </label>
-                          </div>
-                          <small>Puedes pagar con tarjetas de debito y credito</small>
-                          <div class="input-group mb-3">
-                            <input class="w3-input w3-border form-control " type="number"
-                              placeholder="Ingrese un numero de tarjeta" id="nroTarjeta" name="nroTarjeta"
-                              v-model="nroTarjeta" disabled>
-                            <input type="button" id="botonTarjeta" class="form-control" aria-label="tarjeta"
-                              aria-describedby="tarjeta" value="Agrega nueva tarjeta" @click='agregarTarjeta()'>
-                          </div>
-                        </div>
+                    <div class="row justify-content-start mb-2">
+                      <div class="col-3 mb-2">
+                        <h4 for="creditCard">
+                        <input type="radio" name="options" id="creditCard" class="radio-lg mr-2" :value="setPaymentMethod('Tarjeta')" checked>
+                        Tarjeta de crédito o débito</h4>
                       </div>
-                    </validate>
+                    </div>
+                    <vue-form :state="paymentFormState" @submit.prevent="savePayment()">
+                      <validate tag="div" class="row">
+                        <label for="cardHolderName" class="col">Titular de la tarjeta: </label>
+                        <input type="text" id="cardHolderName" name="cardHolderName" class="form-control col-10 mb-2"
+                        autocomplete="off" v-model.trim="paymentForm.cardHolderName" required
+                        placeholder="Ingrese el nombre del titular de la tarjeta">
+                      </validate>
+                      <validate tag="div" class="row">
+                        <label for="cardNumber" class="col">Número de tarjeta: </label>
+                        <input type="number" id="cardNumber" name="cardNumber" class="form-control col-10 mb-2"
+                        autocomplete="off" v-model.number="paymentForm.cardNumber" required
+                        placeholder="Ingrese un número de tarjeta">
+                      </validate>
+                      <validate tag="div" class="row">
+                        <label for="expiryMonth" class="col-2">Fecha de expiración: </label>
+                        <input type="number" id="expiryMonth" name="expiryMonth" class="form-control col-1 mb-2 mr-2"
+                        autocomplete="off" v-model.number="paymentForm.expiryMonth" required placeholder="Mes">
+                        <input type="number" id="expiryYear" name="expiryYear" class="form-control col-1 mb-2"
+                        autocomplete="off" v-model.number="paymentForm.expiryYear" required placeholder="Año">
+                      </validate>
+                      <validate tag="div" class="row">
+                        <label for="cardCode" class="col-2">Código de seguridad: </label>
+                        <input type="number" id="cardCode" name="cardCode" class="form-control col-1 mb-2"
+                        autocomplete="off" v-model.number="paymentForm.cardCode" required placeholder="CVV">
+                      </validate>
+                      <div class="row justify-content-end">
+                          <button class="btn btn-primary my-3 col-1 mr-4" :disabled="paymentFormState.$invalid" type="submit">Aceptar</button>
+                      </div>
+                    </vue-form>
                   </div>
                 </div>
               </div>
@@ -210,6 +205,16 @@
                 <ul v-for="order in orderItems">
                   <li>{{order.product.name}}: ${{order.product.price}} x {{order.quantity}}</li>
                   <hr>
+<<<<<<< HEAD
+=======
+                  <li>Subtotal: $$</li>
+                  <li>Promocion: {{aplicarCupon()}}</li>
+                  <li>Precio de envio: $$</li>
+                  <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}} {{formDataEnvio.barrio}}
+                  </li>
+                  <li>Metodo de pago: {{ getPaymentMethod }}</li>
+                  <li>TOTAL: $$</li>
+>>>>>>> f82aba37cb622dc6143c0296f4269e21dae4f386
                 </ul>
                 <ul v-model="order">
                 <li>Subtotal: ${{order.subtotal}}</li>

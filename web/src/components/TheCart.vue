@@ -33,7 +33,7 @@
 									:quantityGetter="'productQuantity'"
 									@select-quantity="selectQuantity(item.product, $event)"
 								></quantity-selector>
-								<p>${{ item.product.price }}</p>
+								<p>{{ (item.product.price * item.quantity) | currency }}</p>
 							</div>
 						</div>
 						<div class="product-option-delete">
@@ -86,11 +86,12 @@
 
 <script>
 import QuantitySelector from './QuantitySelector';
-import { localMixinOrder } from '../localMixins';
+import { localMixinOrder, localMixinUser } from '../localMixins';
 
 export default {
 	name: 'the-cart',
-	mixins: [localMixinOrder],
+	mixins: [localMixinOrder,
+	localMixinUser],
 	components: {
 		QuantitySelector
 	},
@@ -122,22 +123,20 @@ export default {
 			// this.updateCart();
 		},
 		async goToCheckout() {
-			try {
-				await this.axios.get(
-					'/api/products/go-to/checkout',
-					{
-						headers: {
-							'Authorization': `Bearer ${sessionStorage['authToken']}`
-						}
-					}
-				);
-				this.$router.push('/checkout');
-			} catch (err) {
-				if (err.request.status == 401) {
-					this.$store.dispatch('setAlertMessage', 'warning', 'Debe estar logueado para realizar una compra')
-					this.$router.push('/register/checkout')
+			try{
+				let result = await this.axios.get('api/users/validate', { 
+					headers: { 'Authorization': `Bearer ${this.authToken}`}
+				});
+				console.log(result);
+				if(result.status == 200 || result.status == 304){
+					this.$router.push('/checkout');
+					return;
 				}
+			}catch (error){
+				console.log(error);
 			}
+			this.$store.dispatch('setLoginAttempt', true);
+			this.$router.push('/register');
 		}
 	}
 };

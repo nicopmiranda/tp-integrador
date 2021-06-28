@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken';
+console.log(jwt);
+
 export const localMixinOrder = {
 	methods: {
 		addProductToOrder(product, quantity, incrementQuantity = false) {
@@ -80,7 +83,6 @@ export const localMixinOrder = {
 			}
 		},
 		clearOrder() {
-			localStorage.removeItem('order');
             this.createOrder()
 		},
 		async findProductById(id) {
