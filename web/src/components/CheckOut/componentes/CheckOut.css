@@ -1,5 +1,5 @@
-.src-components-check-out-lucas {
-
+li {
+  list-style: none;
 }
 
 .buttonAplicar {
@@ -57,10 +57,6 @@ cursor: pointer;
 #btnCancelar{
   margin-right: 4px;
   text-align: center;
-}
-
-#headerDetalle{
-  background-color: orange;
 }
 
 #nroTarjeta {
