@@ -2,6 +2,7 @@
 
 	<section class="src-components-the-home">
 		<div class="row">
+        <div class="col-12 alert alert-success" v-if="message.length>1">{{message}}</div>
     <div class="col-12 d-block mb-1">
         <div id="carouselCaptions" class="carousel slide carousel-fade h-100" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -51,7 +52,13 @@
 
   export default  {
     name: 'src-components-the-home',
-    props: [],
+    props: {
+        message: {
+            type: String,
+            required: false,
+            default: ''
+        }
+    },
     mounted () {
 
     },

@@ -18,7 +18,7 @@
 								name="nombre"
 								class="form-control"
 								autocomplete="off"
-								v-model.trim="formData.nombre"
+								v-model.trim="formData.name"
 								required
 								placeholder="Nombre"
 							/>
@@ -67,7 +67,7 @@
 								name="apellido"
 								class="form-control"
 								autocomplete="off"
-								v-model.trim="formData.apellido"
+								v-model.trim="formData.surname"
 								placeholder="Apellido"
 								required
 							/>
@@ -90,7 +90,7 @@
 								name="contraseña"
 								class="form-control"
 								autocomplete="off"
-								v-model.trim="formData.contraseña"
+								v-model.trim="formData.password"
 								placeholder="Contraseña"
 								required
 							/>
@@ -115,7 +115,7 @@
 								name="repetirContraseña"
 								class="form-control"
 								autocomplete="off"
-								v-model.trim="formData.repetirContraseña"
+								v-model.trim="formData.passwordRepeat"
 								placeholder="Repetir contraseña"
 								required
 							/>
@@ -177,7 +177,7 @@
 								class="form-control"
 								autocomplete="off"
 								placeholder="Nombre de usuario"
-								v-model.trim="formData.nombreUsuario"
+								v-model.trim="formData.username"
 								required
 							/>
 							<!--
@@ -301,7 +301,7 @@ export default {
 	},
 	created() {
 		if (this.isUserLoggedIn()) {
-			this.$router.push('/home')
+			this.$router.push('/home/Ya se encuentra logueado')
 		}
 	},
 	destroyed() {
@@ -310,12 +310,11 @@ export default {
 	methods: {
 		getInicialData() {
 			return {
-				nombre: '',
-				apellido: '',
-				contraseña: '',
-				repetirContraseña: '',
-				nombreUsuario: '',
-				edad: '',
+				name: '',
+				surname: '',
+				password: '',
+				passwordRepeat: '',
+				username: '',
 				email: ''
 			};
 		},
@@ -328,9 +327,15 @@ export default {
 
 		async register() {
 			try {
-				await this.axios.post('/api/users/', {});
+				await this.axios.post('/api/users/', {
+					name: this.formData.name,
+					surname: this.formData.surname,
+					email: this.formData.email,
+					username: this.formData.username,
+					password: this.formData.password});
 				this.formData = this.getInicialData();
 				this.formState._reset();
+				this.$router.push('/home/Se ha registrado correctamente!');
 			} catch {
 				this.$store.dispatch(
 					'setAlertMessage',
@@ -348,7 +353,7 @@ export default {
                 if (result.status === 200) {
 					//this.$store.dispatch('setUser', result.data.username);
 					this.$store.dispatch('setAuthToken', result.data.token);
-                    this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home')
+                    this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home/Se ha logueado correctamente!')
 					console.log(result.data.token)
                 }
             } catch(err) {

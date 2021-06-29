@@ -14,6 +14,7 @@ Vue.use(VueRouter)
 const routes = [
     { path: '/', redirect: '/home'},
     { path: '/home', component: TheHome },
+    { path: '/home/:message', component: TheHome, props: true },
     { path: '/products', component: Products },
     {path: '/products/:searchedValue', component: Products, props: true },
     { path: '/contact', component: TheContact },
