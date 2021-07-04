@@ -1,6 +1,3 @@
-import jwt from 'jsonwebtoken';
-console.log(jwt);
-
 export const localMixinOrder = {
 	methods: {
 		addProductToOrder(product, quantity, incrementQuantity = false) {
@@ -37,53 +34,17 @@ export const localMixinOrder = {
             order.promotion = promotion ? promotion : 'No aplica'
             this.updateOrder(order)
         },
-        calculateOrderSubtotal(order) {
-            order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
-            // order.subtotal *= order.promotion ? 0.9 : 1
-            return order
-        },
-        calculateOrderTotalQuantity(order) {
-            if (!order) order = this.getOrder()
-            let orderTotalQuantity = order.items.reduce((accumulator, item) => accumulator + item.quantity, 0)
-            return orderTotalQuantity;
-        },
-		getOrder() {
-			let order = localStorage.getItem('order');
-            if (!order) {
-                order = this.createOrder()
-            } else {
-                try {
-                    order = JSON.parse(order);
-                    this.updateOrder(order)
-                } catch {
-                    order = this.createOrder()
-                }
+		getOrder,
+        updateOrder(order) {
+            if (order) {
+                order = calculateOrderSubtotal(order)
+                const quantity = calculateOrderTotalQuantity(order)
+                this.$store.dispatch('modifyCartTotalQuantity', {quantity, increment: false})
+                localStorage.setItem('order', JSON.stringify(order));
             }
-            return order
-		},
-        createOrder() {
-            const order = {
-                items: [],
-                subtotal: 0,
-                total: 0,
-                shippingTotal: 0,
-                promotion: 'No aplica',
-                paymentMethod: {
-                    type: 'No seleccionado'
-                }
-            };
-            localStorage.setItem('order', JSON.stringify(order));
-            return order
         },
-		updateOrder(order) {
-			if (order) {
-                order = this.calculateOrderSubtotal(order)
-                this.$store.dispatch('modifyCartTotalQuantity', this.calculateOrderTotalQuantity(order), false)
-				localStorage.setItem('order', JSON.stringify(order));
-			}
-		},
 		clearOrder() {
-            this.createOrder()
+            createOrder()
 		},
 		async findProductById(id) {
 			try {
@@ -119,4 +80,53 @@ export const localMixinUser = {
             this.$store.dispatch('setAuthToken', null)
         }
     }
+}
+
+export function calculateOrderTotalQuantity(order) {
+    if (!order) order = getOrder()
+    let orderTotalQuantity = 0
+    if (order.items.length > 0) {
+        orderTotalQuantity = order.items.reduce((accumulator, item) => accumulator + item.quantity, 0)
+    }
+    return orderTotalQuantity;
+}
+
+function getOrder() {
+    let order = localStorage.getItem('order');
+    if (!order) {
+        order = createOrder()
+    } else {
+        try {
+            order = JSON.parse(order);
+            if (this) {
+                this.updateOrder(order)
+            }
+        } catch {
+            console.log('parseo error order')
+            order = createOrder()
+        }
+    }
+    return order
+}
+
+function createOrder() {
+    const order = {
+        items: [],
+        subtotal: 0,
+        total: 0,
+        shippingTotal: 0,
+        promotion: 'No aplica',
+        paymentMethod: {
+            type: 'No seleccionado'
+        }
+    };
+    localStorage.setItem('order', JSON.stringify(order));
+    return order
+}
+
+function calculateOrderSubtotal(order) {
+    if (order.items.length > 0) {
+        order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
+    }
+    return order
 }
