@@ -11,16 +11,15 @@
               <div class="card">
                 <div class="card-header" id="headingOne">
                   <h2 class="mb-0">
-                    <button class="btn btn-block text-left" type="button" data-toggle="collapse"
-                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Codigo Promocional
+                    <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Código Promocional
                     </button>
                   </h2>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                   <div class="card-body">
-                    <label>Aplicar codigo promocional:</label>
-                    <input class="w3-input w3-border " type="text" id="codigo" name="codigo" v-model="codigo" required>
+                    <label>Aplicar código promocional:</label>
+                    <input class="w3-input w3-border " type="text" id="promotion" name="promotion" v-model="promotion" required>
                     <input type="button" class="buttonAplicar" value="Aplicar" v-on:click="vaciarCodigo()">
                   </div>
                 </div>
@@ -30,8 +29,7 @@
               <div class="card">
                 <div class="card-header" id="headingTwo">
                   <h2 class="mb-0">
-                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
-                      data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                       Dirección de Envío
                     </button>
                   </h2>
@@ -43,10 +41,9 @@
 
                       <div class="col">
                         <validate tag="div">
-                          <label for="calle">Calle</label>
-                          <input type="text" id="calle" name="calle" class="form-control" v-model="formDataEnvio.calle"
-                            placeholder="ejemplo: Av Rivadavia 123 4toA" required>
-                          <field-messages name="calle" show="$dirty">
+                          <label for="shipment-shipment-address">Calle</label>
+                          <input type="text" id="shipment-shipment-address" name="shipment-address" class="form-control" v-model="shipmentFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
+                          <field-messages name="shipment-address" show="$dirty">
                             <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
                           </field-messages>
                         </validate>
@@ -54,10 +51,9 @@
 
                       <div class="col">
                         <validate tag="div">
-                          <label for="localidad">Localidad</label>
-                          <input type="text" id="localidad" name="localidad" class="form-control"
-                            v-model="formDataEnvio.localidad" required>
-                          <field-messages name="localidad" show="$dirty">
+                          <label for="shipment-shipment-locality">Localidad</label>
+                          <input type="text" id="shipment-locality" name="shipment-locality" class="form-control" v-model="shipmentFormData.locality" required>
+                          <field-messages name="shipment-locality" show="$dirty">
                             <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
                           </field-messages>
                         </validate>
@@ -65,13 +61,11 @@
                     </div>
 
                     <div class="row">
-
                       <div class="col">
                         <validate tag="div">
-                          <label for="barrio">Barrio</label>
-                          <input type="text" id="barrio" name="barrio" class="form-control"
-                            v-model="formDataEnvio.barrio" required>
-                          <field-messages name="barrio" show="$dirty">
+                          <label for="shipment-shipment-neighborhood">Barrio</label>
+                          <input type="text" id="shipment-neighborhood" name="shipment-neighborhood" class="form-control" v-model="shipmentFormData.neighborhood" required>
+                          <field-messages name="shipment-neighborhood" show="$dirty">
                             <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
                           </field-messages>
                         </validate>
@@ -79,16 +73,14 @@
 
                       <div class="col">
                         <validate tag="div">
-                          <label for="codigoPostal">Código Postal</label>
-                          <input type="number" id="codigoPostal" name="codigoPostal" class="form-control"
-                            v-model="formDataEnvio.codigoPostal" required>
-                          <field-messages name="codigoPostal" show="$dirty">
+                          <label for="shipment-zipCode">Código Postal</label>
+                          <input type="number" id="shipment-zipCode" name="shipment-zipCode" class="form-control" v-model="shipmentFormData.zipCode" required>
+                          <field-messages name="shipment-zipCode" show="$dirty">
                             <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
                           </field-messages>
                         </validate>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -97,8 +89,7 @@
               <div class="card">
                 <div class="card-header" id="headingThree">
                   <h2 class="mb-0">
-                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
-                      data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                       Dirección de Facturación
                     </button>
                   </h2>
@@ -108,27 +99,23 @@
 
                     <div class="row">
                       <div class="col">
-                        <label for="calleFactuarcion">Calle</label>
-                        <input type="text" id="calleFacturacion" name="calleFactuarcion" class="form-control"
-                          v-model="formDataFacturacion.calle" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
+                        <label for="invoice-address">Calle</label>
+                        <input type="text" id="invoice-address" name="invoice-address" class="form-control" v-model="invoiceFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
                       </div>
                       <div class="col">
-                        <label for="localidad">Localidad</label>
-                        <input type="text" id="localidad" name="localidad" class="form-control"
-                          v-model="formDataFacturacion.localidad" required>
+                        <label for="invoice-locality">Localidad</label>
+                        <input type="text" id="invoice-locality" name="locality" class="form-control" v-model="invoiceFormData.locality" required>
                       </div>
-                      
+
                     </div>
                     <div class="row">
                       <div class="col">
-                        <label for="barrio">Barrio</label>
-                        <input type="text" id="barrio" name="barrio" class="form-control"
-                          v-model="formDataFacturacion.barrio" required>
+                        <label for="invoice-neighborhood">Barrio</label>
+                        <input type="text" id="invoice-neighborhood" name="invoice-neighborhood" class="form-control" v-model="invoiceFormData.neighborhood" required>
                       </div>
                       <div class="col">
-                        <label for="codigoPostal">Código Postal</label>
-                        <input type="number" id="codigoPostal" name="codigoPostal" class="form-control"
-                          v-model="formDataFacturacion.codigoPostal" required>
+                        <label for="invoice-zipcode">Código Postal</label>
+                        <input type="number" id="invoice-zipcode" name="invoice-zipcode" class="form-control" v-model="invoiceFormData.zipCode" required>
                       </div>
                     </div>
 
@@ -148,8 +135,7 @@
               <div class="card">
                 <div class="card-header" id="headingFour">
                   <h2 class="mb-0">
-                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
-                      data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                       Método de Pago
                     </button>
                   </h2>
@@ -159,37 +145,31 @@
                     <div class="row justify-content-start mb-2">
                       <div class="col-3 mb-2">
                         <h4 for="creditCard">
-                        <input type="radio" name="options" id="creditCard" class="radio-lg mr-2" :value="setPaymentMethod('Tarjeta')" checked>
-                        Tarjeta de crédito o débito</h4>
+                          <input type="radio" name="options" id="creditCard" class="radio-lg mr-2" :value="setPaymentMethod('Tarjeta')" checked>
+                          Tarjeta de crédito o débito
+                        </h4>
                       </div>
                     </div>
                     <vue-form :state="paymentFormState" @submit.prevent="savePayment()" class="text-center">
                       <validate tag="div" class="row">
                         <label for="cardHolderName" class="col">Titular de la tarjeta: </label>
-                        <input type="text" id="cardHolderName" name="cardHolderName" class="form-control col-10 mb-2"
-                        autocomplete="off" v-model.trim="paymentForm.cardHolderName" required
-                        placeholder="Ingrese el nombre del titular de la tarjeta">
+                        <input type="text" id="cardHolderName" name="cardHolderName" class="form-control col-10 mb-2" autocomplete="off" v-model.trim="paymentForm.cardHolderName" required placeholder="Ingrese el nombre del titular de la tarjeta">
                       </validate>
                       <validate tag="div" class="row">
                         <label for="cardNumber" class="col">Número de tarjeta: </label>
-                        <input type="number" id="cardNumber" name="cardNumber" class="form-control col-10 mb-2"
-                        autocomplete="off" v-model.number="paymentForm.cardNumber" required
-                        placeholder="Ingrese un número de tarjeta">
+                        <input type="number" id="cardNumber" name="cardNumber" class="form-control col-10 mb-2" autocomplete="off" v-model.number="paymentForm.cardNumber" required placeholder="Ingrese un número de tarjeta">
                       </validate>
                       <validate tag="div" class="row">
                         <label for="expiryMonth" class="col-2">Fecha de expiración: </label>
-                        <input type="number" id="expiryMonth" name="expiryMonth" class="form-control col-1 mb-2 mr-2"
-                        autocomplete="off" v-model.number="paymentForm.expiryMonth" required placeholder="Mes">
-                        <input type="number" id="expiryYear" name="expiryYear" class="form-control col-1 mb-2"
-                        autocomplete="off" v-model.number="paymentForm.expiryYear" required placeholder="Año">
+                        <input type="number" id="expiryMonth" name="expiryMonth" class="form-control col-1 mb-2 mr-2" autocomplete="off" v-model.number="paymentForm.expiryMonth" required placeholder="Mes">
+                        <input type="number" id="expiryYear" name="expiryYear" class="form-control col-1 mb-2" autocomplete="off" v-model.number="paymentForm.expiryYear" required placeholder="Año">
                       </validate>
                       <validate tag="div" class="row">
                         <label for="cardCode" class="col-2">Código de seguridad: </label>
-                        <input type="number" id="cardCode" name="cardCode" class="form-control col-1 mb-2"
-                        autocomplete="off" v-model.number="paymentForm.cardCode" required placeholder="CVV">
+                        <input type="number" id="cardCode" name="cardCode" class="form-control col-1 mb-2" autocomplete="off" v-model.number="paymentForm.cardCode" required placeholder="CVV">
                       </validate>
                       <div class="row justify-content-end">
-                          <button class="btn btn-primary my-3 col-1 mr-4" :disabled="paymentFormState.$invalid" type="submit">Aceptar</button>
+                        <button class="btn btn-primary my-3 col-1 mr-4" :disabled="paymentFormState.$invalid" type="submit">Aceptar</button>
                       </div>
                     </vue-form>
                   </div>
@@ -208,11 +188,10 @@
                 <hr>
                 <ul>
                   <li>Subtotal: ${{order.subtotal}}</li>
-                  <li>Promocion: No aplica</li>
-                  <li>Precio de envio: $$</li>
-                  <li>Direccion de envio: {{formDataEnvio.calle}} {{formDataEnvio.localidad}} {{formDataEnvio.barrio}}
-                  </li>
-                  <li>Metodo de pago: {{ getPaymentMethod }}</li>
+                  <li>Promoción: No aplica</li>
+                  <li>Precio de envío: $$</li>
+                  <li>Dirección de envío: {{shipmentFormData.address}} {{shipmentFormData.locality}} {{shipmentFormData.neighborhood}}</li>
+                  <li>Método de pago: {{ getPaymentMethod }}</li>
                   <li>TOTAL: $$</li>
                 </ul>
               </div>
@@ -221,12 +200,9 @@
               <button class="btn btn-danger w-25" id="btnCancelar" type="submit">Cancelar</button>
               <button class="btn btn-success w-25" :disabled="formState.$invalid" type="submit">Finalizar compra</button>
             </div>
-
           </div>
-
         </div>
       </div>
     </vue-form>
   </div>
-
 </section>

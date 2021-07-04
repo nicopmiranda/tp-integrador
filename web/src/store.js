@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { localMixinOrder } from './localMixins'
+import { calculateOrderTotalQuantity } from './localMixins'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
 		productQuantity: 1,
-		cartTotalQuantity: localMixinOrder.methods.calculateOrderTotalQuantity(),
+		cartTotalQuantity: calculateOrderTotalQuantity(),
 		authToken: localStorage.getItem('authToken'),
 		user: {
 			username: '',
@@ -30,7 +30,8 @@ export default new Vuex.Store({
         validProductQuantity({ commit }, quantity) {
             commit('validProductQuantity', quantity)
         },
-		modifyCartTotalQuantity({ commit }, quantity, increment = true) {
+		modifyCartTotalQuantity({ commit }, {quantity, increment = true}) {
+			console.log('q y i:', quantity, increment)
 			commit('modifyCartTotalQuantity', quantity, increment)
 		},
 		setAuthToken({ commit }, token) {
