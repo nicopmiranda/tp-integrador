@@ -36,22 +36,29 @@ async function addUser(user) {
 }
 
 async function updateUser(user) {
-	const clientMongo = await connection.getConnection();
-	const query = { _id: new ObjectId(user._id) };
-	const newValues = {
-		$set: {
-			name: user.name,
-			surname: user.surname,
-			email: user.email,
-			username: user.username,
-			password: user.password,
-			role: user.role
-		}
-	};
-	const result = await clientMongo
-		.db('ecommerce')
-		.collection('users')
-		.updateOne(query, newValues);
+	let result = {}
+	const foundUserByEmail = await findUserByEmail(user.email)
+	if (foundUserByEmail && foundUserByEmail._id != user._id) {
+		result.error = true
+		result.message = 'El email ingresado ya existe, trate con otro.'
+	} else {
+		const clientMongo = await connection.getConnection();
+		const query = { _id: new ObjectId(user._id) };
+		const newValues = {
+			$set: {
+				name: user.name,
+				surname: user.surname,
+				email: user.email,
+				username: user.username,
+				password: user.password,
+				role: user.role
+			}
+		};
+		result = await clientMongo
+			.db('ecommerce')
+			.collection('users')
+			.updateOne(query, newValues);
+	}
 	return result;
 }
 
@@ -81,6 +88,15 @@ async function findByCredentials(username, password) {
 	}
 
 	return user;
+}
+
+async function findUserByEmail(email) {
+	const clientMongo = await connection.getConnection()
+	const user = await clientMongo
+		.db('ecommerce')
+		.collection('users')
+		.findOne({ email })
+	return user
 }
 
 function generateAuthToken(user) {

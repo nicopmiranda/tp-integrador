@@ -73,8 +73,12 @@ router.put('/:id', async (req, res) => {
         let user = body;
     	user._id= req.params.id;
 		try {
-			await dataUsers.updateUser(user);
-			res.status(200).json(user);
+			const updateResult = await dataUsers.updateUser(user);
+			if (!updateResult.error) {
+				res.status(200).json(user);
+			} else {
+				res.status(400).send(updateResult.message)
+			}
 		} catch(err) {
 			res.status(400).send('Los datos del usuario no pudieron ser actualizados')
 		}
