@@ -48,15 +48,10 @@ async function updateUser(user) {
 			role: user.role
 		}
 	};
-	console.log(newValues);
-	console.log(query);
-	//No estaría funcionando el query, preguntar al profe why
 	const result = await clientMongo
 		.db('ecommerce')
 		.collection('users')
 		.updateOne(query, newValues);
-
-	console.log(result);
 	return result;
 }
 

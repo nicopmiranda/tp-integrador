@@ -5,7 +5,7 @@ import auth from '../middleware/auth.js';
 let router = express.Router();
 
 /* GET users listing. */
-router.get('/', auth.authAdmin, async function (req, res, next) {
+router.get('/', auth.auth, async function (req, res, next) {
 	const users = await dataUsers.getUsers();
 	res.send(users);
 });
@@ -52,10 +52,10 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
 	const schema = joi.object({
-		name: joi.string().alphanum().required(),
-		surname: joi.string().alphanum().required(),
+		name: joi.string().alphanum().min(3).required(),
+		surname: joi.string().alphanum().min(3).required(),
 		email: joi.string().email().required(),
 		username: joi.string().alphanum().min(4).max(20).required(),
 		password: joi
@@ -64,16 +64,21 @@ router.put('/', async (req, res) => {
 			.required(),
 		role: joi.string().alphanum().allow('user', 'admin')
 	});
-	const body = req.body;
-	const result = schema.validate(body);
+    const body = req.body;
+    const result = schema.validate(body);
 
-	if (result.error) {
-		res.status(400).send(result.error.details[0].message);
-	} else {
-		let user = body;
-		await dataUsers.updateUser(user);
-		res.status(200).json(user);
-	}
+    if (result.error) {
+        res.status(400).send(result.error.details[0].message);
+    } else {
+        let user = body;
+    	user._id= req.params.id;
+		try {
+			await dataUsers.updateUser(user);
+			res.status(200).json(user);
+		} catch(err) {
+			res.status(400).send('Los datos del usuario no pudieron ser actualizados')
+		}
+    }
 });
 
 router.post('/login', async (req, res) => {
