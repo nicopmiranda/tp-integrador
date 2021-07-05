@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const MSG_DUPLICATED_EMAIL = 'El email ingresado ya existe, trate con otro.';
+
 async function getUsers() {
 	const clientMongo = await connection.getConnection();
 	const users = await clientMongo
@@ -25,24 +27,30 @@ async function getUser(id) {
 }
 
 async function addUser(user) {
-	const clientMongo = await connection.getConnection();
-
-	user.password = await bcrypt.hash(user.password, 8);
-	const result = await clientMongo
-		.db('ecommerce')
-		.collection('users')
-		.insertOne(user);
+	let result = {}
+	if (await findUserByEmail(user.email)) {
+		result.error = true
+		result.message = MSG_DUPLICATED_EMAIL
+	} else {
+		const clientMongo = await connection.getConnection();
+		user.password = await bcrypt.hash(user.password, 8);
+		result = await clientMongo
+			.db('ecommerce')
+			.collection('users')
+			.insertOne(user);
+	}
 	return result;
 }
 
 async function updateUser(user) {
 	let result = {}
-	const foundUserByEmail = await findUserByEmail(user.email)
+	const foundUserByEmail = await findUserByEmail(user.email);
 	if (foundUserByEmail && foundUserByEmail._id != user._id) {
 		result.error = true
-		result.message = 'El email ingresado ya existe, trate con otro.'
+		result.message = MSG_DUPLICATED_EMAIL
 	} else {
 		const clientMongo = await connection.getConnection();
+		user.password = await bcrypt.hash(user.password, 8);
 		const query = { _id: new ObjectId(user._id) };
 		const newValues = {
 			$set: {
@@ -91,12 +99,12 @@ async function findByCredentials(username, password) {
 }
 
 async function findUserByEmail(email) {
-	const clientMongo = await connection.getConnection()
+	const clientMongo = await connection.getConnection();
 	const user = await clientMongo
 		.db('ecommerce')
 		.collection('users')
-		.findOne({ email })
-	return user
+		.findOne({ email });
+	return user;
 }
 
 function generateAuthToken(user) {

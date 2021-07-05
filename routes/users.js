@@ -24,65 +24,53 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	const schema = joi.object({
-		name: joi.string().alphanum().required(),
-		surname: joi.string().alphanum().required(),
-		email: joi.string().email().required(),
-		username: joi.string().alphanum().min(4).max(20).required(),
-		password: joi
-			.string()
-			.pattern(new RegExp('[a-zA-Z0-9]{3,30}'))
-			.required(),
-		role: joi.string().alphanum().allow('user', 'admin')
-	});
 	const body = req.body;
-
 	if (!body.role) {
 		body.role = 'user';
 	}
 
-	const result = schema.validate(body);
-
+	const result = validateUserData(body)
 	if (result.error) {
-		res.status(400).send(result.error.details[0].message);
+		const field = result.error.details[0].path[0]
+		res.status(400).send(getErrorMessageByField(field));
 	} else {
 		let user = body;
-		await dataUsers.addUser(user);
-		res.status(200).json(user);
+		try {
+			const addResult = await dataUsers.addUser(user);
+			if (addResult.error) {
+				res.status(400).send(addResult.message)
+			} else {
+				res.status(200).json(user);
+			}
+		} catch {
+			res.status(400).send('El usuario no pudo ser creado')
+		}
 	}
 });
 
-router.put('/:id', async (req, res) => {
-	const schema = joi.object({
-		name: joi.string().alphanum().min(3).required(),
-		surname: joi.string().alphanum().min(3).required(),
-		email: joi.string().email().required(),
-		username: joi.string().alphanum().min(4).max(20).required(),
-		password: joi
-			.string()
-			.pattern(new RegExp('[a-zA-Z0-9]{3,30}'))
-			.required(),
-		role: joi.string().alphanum().allow('user', 'admin')
-	});
-    const body = req.body;
-    const result = schema.validate(body);
+router.put('/:id', auth.auth, async (req, res) => {
+	const body = req.body;
+	const result = validateUserData(body)
 
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message);
-    } else {
-        let user = body;
-    	user._id= req.params.id;
+	if (result.error) {
+		const field = result.error.details[0].path[0];
+		res.status(400).send(getErrorMessageByField(field));
+	} else {
+		let user = body;
+		user._id = req.params.id;
 		try {
 			const updateResult = await dataUsers.updateUser(user);
 			if (!updateResult.error) {
 				res.status(200).json(user);
 			} else {
-				res.status(400).send(updateResult.message)
+				res.status(400).send(updateResult.message);
 			}
-		} catch(err) {
-			res.status(400).send('Los datos del usuario no pudieron ser actualizados')
+		} catch (err) {
+			res
+				.status(400)
+				.send('Los datos del usuario no pudieron ser actualizados');
 		}
-    }
+	}
 });
 
 router.post('/login', async (req, res) => {
@@ -107,5 +95,42 @@ router.delete('/:id', auth.authAdmin, async (req, res) => {
 		res.json(user);
 	}
 });
+
+function validateUserData(data) {
+	return getUserValidationSchema().validate(data)
+}
+
+function getUserValidationSchema() {
+	return joi.object({
+		name: joi.string().alphanum().required(),
+		surname: joi.string().alphanum().required(),
+		email: joi.string().email().required(),
+		username: joi.string().alphanum().min(4).max(20).required(),
+		password: joi
+			.string()
+			.pattern(new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]){3,30}'))
+			.required(),
+		role: joi.string().alphanum().allow('user', 'admin')
+	});
+}
+
+function getErrorMessageByField(field) {
+	switch (field) {
+		case 'name':
+			return 'El nombre es requerido y debe ser alfanumérico';
+		case 'surname':
+			return 'El apellido es requerido y debe ser alfanumérico';
+		case 'email':
+			return 'El email es requerido y debe ser un formato de email válido';
+		case 'username':
+			return 'El nombre de usuario es requerido y debe ser alfanumérico y estar compuesto por entre 4 y 20 caracteres';
+		case 'password':
+			return 'La contraseña debe contener por lo menos una minúscula, una mayúscula y un número y debe estar compuesta por entre 3 y 30 caracteres';
+		case 'role':
+			return "El rol puede ser o 'user' o 'admin'";
+		default:
+			return 'Campos inválidos';
+	}
+}
 
 export default router;
