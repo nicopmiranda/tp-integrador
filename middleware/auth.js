@@ -4,8 +4,11 @@ import jwt from 'jsonwebtoken';
 Con axios o fetch se puede armar el request desde el front. */
 function auth(req, res, next) {
 	try {
+		if (!req.header('Authorization')) throw new Error('Se requiere autorización')
 		const token = req.header('Authorization').replace('Bearer ', '');
-		if (!jwt.verify(token, process.env.SECRET)) {
+		try {
+			jwt.verify(token, process.env.SECRET)
+		} catch {
 			jwt.verify(token, process.env.SECRET_ADMIN);
 		}
 		next();
