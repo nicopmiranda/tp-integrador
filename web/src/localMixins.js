@@ -38,6 +38,8 @@ export const localMixinOrder = {
         updateOrder(order) {
             if (order) {
                 order = calculateOrderSubtotal(order)
+                //Revisar
+                order = calculateOrderTotal(order)
                 const quantity = calculateOrderTotalQuantity(order)
                 this.$store.dispatch('modifyCartTotalQuantity', {quantity, increment: false})
                 localStorage.setItem('order', JSON.stringify(order));
@@ -126,7 +128,15 @@ function createOrder() {
 
 function calculateOrderSubtotal(order) {
     if (order.items.length > 0) {
-        order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0)
+        order.subtotal = order.items.reduce((accumulator, item) => accumulator + item.total, 0);
     }
-    return order
+    return order;
+}
+
+function calculateOrderTotal(order){
+    //For now, needs to calculate total considering subtotal + shipping price + promotion
+    if (order.items.length > 0) {
+        order.total = order.items.reduce((accumulator, item) => accumulator + item.total, 0);
+    }
+    return order;
 }

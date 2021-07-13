@@ -9,10 +9,7 @@ export default new Vuex.Store({
 		productQuantity: 1,
 		cartTotalQuantity: calculateOrderTotalQuantity(),
 		authToken: localStorage.getItem('authToken'),
-		user: {
-			username: '',
-			password: ''
-		},
+		username: '',
 		attemptedLogin: false
 	},
 	getters: {
@@ -22,8 +19,11 @@ export default new Vuex.Store({
 		authToken: (state) => {
 			return state.authToken;
 		},
-		loginAttempt: (state) =>{
+		loginAttempt: (state) => {
 			return state.attemptedLogin;
+		},
+		username: (state) => {
+			return state.username;
 		}
 	},
 	actions: {
@@ -37,8 +37,8 @@ export default new Vuex.Store({
 		setAuthToken({ commit }, token) {
 			commit('setAuthToken', token)
 		},
-		setUser({ commit }, user) {
-			commit('setAuthToken', user)
+		setUsername({ commit }, username) {
+			commit('setUsername', username)
 		},
 		setLoginAttempt({ commit }, tried){
 			commit('setLoginAttempt', tried)
@@ -70,10 +70,10 @@ export default new Vuex.Store({
 		},
 		setLoginAttempt(state, tried){
 			state.attemptedLogin = tried;
-		}/*,
-		setUser(state, user){
-
-		}*/
+		},
+		setUsername(state, username){
+			state.username = username;
+		}
 	}
 });
 

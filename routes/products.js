@@ -45,7 +45,7 @@ router.post('/', auth.authAdmin, async (req, res) => {
 	}
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.authAdmin, async (req, res) => {
 	const schema = joi.object({
 		name: joi.string().min(3).required(),
 		description: joi.string().min(3).required(),
@@ -66,7 +66,7 @@ router.put('/:id', async (req, res) => {
 	}
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.authAdmin, async (req, res) => {
 	const product = await dataProduct.getProduct(req.params.id);
 	if (!product) {
 		res.status(404).send('Producto no encontrado');

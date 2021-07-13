@@ -337,18 +337,15 @@ export default {
 				if (result.status === 200) {
 					//this.$store.dispatch('setUser', result.data.username);
 					this.$store.dispatch('setAuthToken', result.data.token);
-					this.$router.push(
-						this.redirectTo
-							? `/${this.redirectTo}`
-							: '/home/Se ha logueado correctamente!'
-					);
-					console.log(result.data.token);
-				}
-			} catch (err) {
-				console.log('Invalid credentials');
-			}
-			this.invalidLoginCredentials = true;
-		}
+                    this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home/Se ha logueado correctamente!')
+					console.log(result.data.token)
+					this.$store.dispatch('setUsername', result.data.username);
+                }
+            } catch(err) {
+                console.log('Invalid credentials')
+            }
+            this.invalidLoginCredentials = true
+        }
 	}
 };
 </script>
