@@ -156,6 +156,7 @@ export default {
 			this.paymentForm = this.getDataPayment();
 			// this.formDataFacturacion = this.getDataFacturacion()
 			this.formState._reset();
+			this.$router.push('/confirmation-page');
 		},
 		savePayment() {
 			this.paymentCompleted = true;
