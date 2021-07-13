@@ -355,6 +355,7 @@ export default {
 					this.$store.dispatch('setAuthToken', result.data.token);
                     this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home/Se ha logueado correctamente!')
 					console.log(result.data.token)
+					this.$store.dispatch('setUsername', result.data.username);
                 }
             } catch(err) {
                 console.log('Invalid credentials')

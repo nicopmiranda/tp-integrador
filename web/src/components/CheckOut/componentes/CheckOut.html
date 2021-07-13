@@ -37,50 +37,27 @@
 
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                   <div class="card-body">
-                    <div class="row">
-
-                      <div class="col">
-                        <validate tag="div">
-                          <label for="shipment-shipment-address">Calle</label>
-                          <input type="text" id="shipment-shipment-address" name="shipment-address" class="form-control" v-model="shipmentFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
-                          <field-messages name="shipment-address" show="$dirty">
-                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                          </field-messages>
+                    <vue-form :state="shippingFormState" @submit.prevent="saveShipping()" class="text-center row">
+                        <validate tag="div" class="col-6">
+                          <label for="shipping-address">Calle</label>
+                          <input type="text" id="shipping-address" name="shipping-address" class="form-control" v-model="shippingFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
                         </validate>
-                      </div>
-
-                      <div class="col">
-                        <validate tag="div">
-                          <label for="shipment-shipment-locality">Localidad</label>
-                          <input type="text" id="shipment-locality" name="shipment-locality" class="form-control" v-model="shipmentFormData.locality" required>
-                          <field-messages name="shipment-locality" show="$dirty">
-                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                          </field-messages>
+                        <validate tag="div" class="col-6">
+                          <label for="shipping-state">Localidad</label>
+                          <input type="text" id="shipping-state" name="state" class="form-control" v-model="shippingFormData.state" required>
                         </validate>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col">
-                        <validate tag="div">
-                          <label for="shipment-shipment-neighborhood">Barrio</label>
-                          <input type="text" id="shipment-neighborhood" name="shipment-neighborhood" class="form-control" v-model="shipmentFormData.neighborhood" required>
-                          <field-messages name="shipment-neighborhood" show="$dirty">
-                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                          </field-messages>
+                        <validate tag="div" class="col-6 mt-2">
+                          <label for="shipping-city">Barrio</label>
+                          <input type="text" id="shipping-city" name="shipping-city" class="form-control" v-model="shippingFormData.city" required>
                         </validate>
-                      </div>
-
-                      <div class="col">
-                        <validate tag="div">
-                          <label for="shipment-zipCode">Código Postal</label>
-                          <input type="number" id="shipment-zipCode" name="shipment-zipCode" class="form-control" v-model="shipmentFormData.zipCode" required>
-                          <field-messages name="shipment-zipCode" show="$dirty">
-                            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
-                          </field-messages>
+                        <validate tag="div" class="col-6 mt-2">
+                          <label for="shipping-zipcode">Código Postal</label>
+                          <input type="number" id="shipping-zipcode" name="shipping-zipcode" class="form-control" v-model="shippingFormData.zipCode" required>
                         </validate>
-                      </div>
-                    </div>
+                        <div class="col-12 text-right">
+                          <button class="btn btn-primary mt-4" :disabled="shippingFormState.$invalid" type="submit">Aceptar</button>
+                        </div>
+                    </vue-form>
                   </div>
                 </div>
               </div>
@@ -96,29 +73,27 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                   <div class="card-body">
-
-                    <div class="row">
-                      <div class="col">
-                        <label for="invoice-address">Calle</label>
-                        <input type="text" id="invoice-address" name="invoice-address" class="form-control" v-model="invoiceFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
-                      </div>
-                      <div class="col">
-                        <label for="invoice-locality">Localidad</label>
-                        <input type="text" id="invoice-locality" name="locality" class="form-control" v-model="invoiceFormData.locality" required>
-                      </div>
-
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <label for="invoice-neighborhood">Barrio</label>
-                        <input type="text" id="invoice-neighborhood" name="invoice-neighborhood" class="form-control" v-model="invoiceFormData.neighborhood" required>
-                      </div>
-                      <div class="col">
-                        <label for="invoice-zipcode">Código Postal</label>
-                        <input type="number" id="invoice-zipcode" name="invoice-zipcode" class="form-control" v-model="invoiceFormData.zipCode" required>
-                      </div>
-                    </div>
-
+                    <vue-form :state="billingFormState" @submit.prevent="saveBilling()" class="text-center row">
+                        <validate tag="div" class="col-6">
+                          <label for="billing-address">Calle</label>
+                          <input type="text" id="billing-address" name="billing-address" class="form-control" v-model="billingFormData.address" placeholder="ejemplo: Av Rivadavia 123 4toA" required>
+                        </validate>
+                        <validate tag="div" class="col-6">
+                          <label for="billing-state">Localidad</label>
+                          <input type="text" id="billing-state" name="state" class="form-control" v-model="billingFormData.state" required>
+                        </validate>
+                        <validate tag="div" class="col-6 mt-2">
+                          <label for="billing-city">Barrio</label>
+                          <input type="text" id="billing-city" name="billing-city" class="form-control" v-model="billingFormData.city" required>
+                        </validate>
+                        <validate tag="div" class="col-6 mt-2">
+                          <label for="billing-zipcode">Código Postal</label>
+                          <input type="number" id="billing-zipcode" name="billing-zipcode" class="form-control" v-model="billingFormData.zipCode" required>
+                        </validate>
+                        <div class="col-12 text-right">
+                          <button class="btn btn-primary mt-4" :disabled="billingFormState.$invalid" type="submit">Aceptar</button>
+                        </div>
+                    </vue-form>
                     <!-- <hr>
                 <div class="form-check" v-if="formDataEnvio.calle != formState.$dirty " >
                   <input class="form-check-input" type="checkbox" id="checkDireccionFacturacion" >
@@ -188,17 +163,18 @@
                 <hr>
                 <ul>
                   <li>Subtotal: ${{order.subtotal}}</li>
-                  <li>Promoción: No aplica</li>
-                  <li>Precio de envío: $$</li>
-                  <li>Dirección de envío: {{shipmentFormData.address}} {{shipmentFormData.locality}} {{shipmentFormData.neighborhood}}</li>
+                  <li>Promoción: {{order.promotion}}</li>
+                  <li>Precio de envío: {{order.shippingTotal}}</li>
+                  <li>Dirección de envío: <label v-if=shippingCompleted> {{shippingFormData.address}} {{shippingFormData.state}} {{shippingFormData.city}} </label></li>
+                  <li>Dirección de facturación: <label v-if=billingCompleted> {{billingFormData.address}} {{billingFormData.state}} {{billingFormData.city}} </label></li>
                   <li>Método de pago: {{ getPaymentMethod }}</li>
-                  <li>TOTAL: $$</li>
+                  <li>TOTAL: {{order.total}}</li>
                 </ul>
               </div>
             </div>
             <div class="row text-left mb-3 ml-3">
-              <button class="btn btn-danger w-25" id="btnCancelar" type="submit">Cancelar</button>
-              <button class="btn btn-success w-25" :disabled="formState.$invalid" type="submit">Finalizar compra</button>
+              <router-link to="/cart" class="btn btn-danger w-25" id="btnCancelar" type="button">Cancelar</router-link>
+              <button class="btn btn-success w-25" :disabled=getPurchaseButtonStatus type="submit">Finalizar compra</button>
             </div>
           </div>
         </div>

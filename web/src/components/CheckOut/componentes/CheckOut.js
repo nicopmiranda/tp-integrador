@@ -1,4 +1,5 @@
 import { localMixinOrder } from '../../../localMixins';
+
 export default {
 	name: 'src-components-check-out',
 	mixins: [localMixinOrder],
@@ -9,26 +10,30 @@ export default {
   },
 	data() {
 		return {
-			shipmentFormData: this.getShipmentFormData(),
-			invoiceFormData: this.getInvoiceFormData(),
 			formState: {},
 			promotion: null,
 			checkEfectivo: false,
 			checkOnline: false,
-			picked: false,
 			paymentMethod: '',
 			orderItems: this.getOrder().items,
 			order: this.getOrder(),
 			paymentForm: this.getDataPayment(),
-			paymentFormState: {}
+			paymentFormState: {},
+			paymentCompleted: false,
+			shippingFormData: this.getShippingFormData(),
+			shippingFormState: {},
+			shippingCompleted: false,
+			billingFormData: this.getBillingFormData(),
+			billingFormState: {},
+			billingCompleted: false,
 		};
 	},
 	methods: {
-		getShipmentFormData() {
+		getShippingFormData() {
 			return {
 				address: '',
-				locality: '',
-				neighborhood: '',
+				state: '',
+				city: '',
 				zipCode: ''
 			};
 		},
@@ -41,11 +46,11 @@ export default {
 				cardCode: ''
 			};
 		},
-		getInvoiceFormData() {
+		getBillingFormData() {
 			return {
 				address: '',
-				locality: '',
-				neighborhood: '',
+				state: '',
+				city: '',
 				zipCode: ''
 			};
 		},
@@ -87,16 +92,83 @@ export default {
       
      },*/
 		finalizarCompra() {
-			this.formDataEnvio = this.getDataEnvio();
+			/*let payment = {
+				trxAmount: {
+					total: this.order.total,
+					currency: "032"
+				},
+				paymentCard: {
+					cardNumber: this.paymentForm.cardNumber,
+					expiryMonth: this.paymentForm.expiryMonth,
+					expiryYear: this.paymentForm.expiryYear,
+					cardCode: this.paymentForm.cardCode
+				},
+				shippingDetails: {
+					address: this.shippingFormData.address,
+					city: this.shippingFormData.city,
+					state: this.shippingFormData.state,
+					zipCode: this.shippingFormData.zipCode
+				},
+				billingDetails: {
+					address: this.billingFormData.address,
+					city: this.billingFormData.city,
+					state: this.billingFormData.state,
+					zipCode: this.billingFormData.zipCode
+				}
+			}
+			let resultPayment = [];
+			let resultOrder = [];
+			console.log(`Bearer ${this.$store.getters.authToken}`);
+			try{
+				resultPayment = await this.axios.post('/api/payments', {
+					headers: { 'Authorization': `Bearer ${this.$store.getters.authToken}`},
+					data: {
+						trxAmount: payment.trxAmount,
+						paymentCard: payment.paymentCard,
+						shippingDetails: payment.shippingDetails,
+						billingDetails: payment.billingDetails
+					}
+				});
+				if(resultPayment != null){
+					resultOrder = await this.axios.post('/api/orders', {
+						headers: { 'Authorization': `Bearer ${this.$store.getters.authToken}`},
+						data: {
+							username: this.$store.getters.username,
+							products: this.order.items,
+							shippingTotal: this.order.shippingTotal,
+							promotion: this.order.promotion,
+							paymentMethod: this.order.paymentMethod,
+							subtotal: this.order.subtotal,
+							total: this.order.total,
+							shippingDetails: payment.shippingDetails,
+							billingDetails: payment.billingDetails
+						}
+					});
+				}
+			} catch(err){
+				console.log(err);
+				console.log(resultPayment);
+				console.log(resultOrder);
+			}
+			*/
+			this.shippingFormData = this.getShippingFormData();
+			this.billingFormData = this.getBillingFormData();
+			this.paymentForm = this.getDataPayment();
 			// this.formDataFacturacion = this.getDataFacturacion()
 			this.formState._reset();
 		},
 		savePayment() {
-			this.picked = true;
+			this.paymentCompleted = true;
 			/*this.order.paymentCard.cardNumber = this.paymentForm.cardNumber;
-        this.order.paymentCard.expiryMonth = this.paymentForm.expiryMonth;
-        this.order.paymentCard.expiryYear = this.paymentForm.expiryYear;
-        this.order.paymentCard.cardCode = this.paymentForm.cardCode;*/
+        	this.order.paymentCard.expiryMonth = this.paymentForm.expiryMonth;
+        	this.order.paymentCard.expiryYear = this.paymentForm.expiryYear;
+        	this.order.paymentCard.cardCode = this.paymentForm.cardCode;*/
+		},
+		saveBilling() {
+			this.billingCompleted = true;
+		},
+		saveShipping() {
+			this.shippingCompleted = true;
 		},
 		setPaymentMethod(paymentMethod) {
 			this.paymentMethod = paymentMethod;
@@ -105,6 +177,13 @@ export default {
 	computed: {
 		getPaymentMethod() {
 			return this.paymentMethod;
+		},
+		getPurchaseButtonStatus(){
+			if(this.billingCompleted == false || this.shippingCompleted == false || this.paymentCompleted == false){
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 };
