@@ -6,6 +6,7 @@ import TheRegister from './components/TheRegister'
 import CheckOut from './components/CheckOut/index.vue'
 import Products from './components/Products/index.vue'
 import TheCart from './components/TheCart'
+import TheConfirmationPage from './components/TheConfirmationPage'
 
 import ProductDetail from './components/ProductDetail'
 
@@ -23,8 +24,8 @@ const routes = [
     { path: '/cart', component: TheCart },
     { path: '/product-details/:productId', component: ProductDetail, props: true},
     { path: '/checkout', component: CheckOut },
+    { path: '/confirmation-page', component: TheConfirmationPage },
     { path: '*', redirect: '/home' }
-
 ]
 
 const router = new VueRouter({
