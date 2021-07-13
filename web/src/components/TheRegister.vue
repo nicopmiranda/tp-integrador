@@ -8,7 +8,7 @@
 				<h3>Formulario de registro</h3>
 				<br />
 				<vue-form :state="formState" @submit.prevent="register()">
-					<div class="col-12 form-container">
+					<div class="col-12 form-register">
 						<!-- campo nombre -->
 						<validate tag="div">
 							<label for="nombre"></label>
@@ -21,12 +21,10 @@
 								v-model.trim="formData.name"
 								required
 								placeholder="Nombre"
-							/>
-							<!-- 
-								:minlength="nombreLengthMin"
+                                :minlength="nombreLengthMin"
 								:maxlength="nombreLengthMax"
-								no-espacios
-								mensajes de validación
+								no-spaces
+							/>						
 						<field-messages name="nombre" show="$dirty">
 							<div
 								slot="required"
@@ -35,7 +33,7 @@
 								Campo requerido
 							</div>
 							<div
-								slot="no-espacios"
+								slot="no-spaces"
 								class="alert alert-danger mt-1"
 							>
 								No se permiten espacios intermedios en este
@@ -49,13 +47,13 @@
 								{{ nombreLengthMin }} caracteres
 							</div>
 							<div
-								v-if="formData.nombre.length == nombreLengthMax"
+								v-if="formData.name.length == nombreLengthMax"
 								class="alert alert-warning mt-1"
 							>
 								Este campo debe tener como máximo
 								{{ nombreLengthMax }} caracteres
 							</div>
-						</field-messages-->
+						</field-messages>
 					</validate>
 					<!--br />-->
 						<!-- campo apellido -->
@@ -71,13 +69,13 @@
 								placeholder="Apellido"
 								required
 							/>
-							<!-- mensajes de validación 
+							<!-- mensajes de validación -->
 						<field-messages name="apellido" show="$dirty">
 							<div
 								slot="required"
 								class="alert alert-danger mt-1"
-							></div>
-						</field-messages-->
+							>Campo requerido</div>
+						</field-messages>
 					</validate>
 					<!--br /-->
                     
@@ -94,7 +92,7 @@
 								placeholder="Contraseña"
 								required
 							/>
-							<!-- mensajes de validación
+							<!-- mensajes de validación-->
 						<field-messages name="contraseña" show="$dirty">
 							<div
 								slot="required"
@@ -102,7 +100,7 @@
 							>
 								Campo requerido
 							</div>
-						</field-messages-->
+						</field-messages>
 					</validate>
 
 					<!--br />-->
@@ -119,7 +117,7 @@
 								placeholder="Repetir contraseña"
 								required
 							/>
-							<!-- mensajes de validación 
+							<!-- mensajes de validación --> 
 						<field-messages name="repetirContraseña" show="$dirty">
 							<div
 								slot="required"
@@ -136,7 +134,7 @@
 							>
 								Las contraseñas no coinciden
 							</div>
-						</field-messages-->
+						</field-messages>
 					</validate>
 					<!--br />-->
 						<!-- campo email -->
@@ -183,7 +181,7 @@
 							<!--
 								:minlength="nombreLengthMin"
 								:maxlength="nombreLengthMax"
-								no-espacios
+								no-spaces
 								div slot="required" class="alert alert-danger mt-0">
 								Campo requerido
 							</div-->
@@ -196,7 +194,7 @@
 								Campo requerido
 							</div>
 							<div
-								slot="no-espacios"
+								slot="no-spaces"
 								class="alert alert-danger mt-1"
 							>
 								No se permiten espacios intermedios en este
@@ -392,5 +390,10 @@ h1 {
 
 p{
 	color: red;
+}
+
+.form-register{
+    height: 20rem;
+    overflow: scroll;
 }
 </style>
