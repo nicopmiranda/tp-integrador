@@ -19,3 +19,19 @@
 .jumbotron{
     background-color: var(--secondary-color);
 }
+
+.card {
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.product-img {
+    height: 15rem;
+}
