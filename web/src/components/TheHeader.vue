@@ -4,7 +4,7 @@
 			<div class="navbar-header">
 				<a class="navbar-brand">
 					<img
-						src="/favicon.ico"
+						src="https://i.postimg.cc/vTkPBQdN/logo-hardcore.png"
 						alt="Logo"
 						class="logo-img" />
 				</a>
