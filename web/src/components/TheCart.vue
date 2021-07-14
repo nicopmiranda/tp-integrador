@@ -11,7 +11,7 @@
 			<div class="cart-list">
 				<div v-for="(item, index) in cart.items" :key="index" class="cart-box">
 					<div class="product-info">
-						<div class="product-img-container">
+						<div>
 							<img
 								:src="item.product.imageUrl"
 								:title="`Image of ${item.product.name}`"
@@ -183,12 +183,9 @@ export default {
 	gap: 1rem;
 }
 
-.product-img-container {
-	width: 20%;
-}
-
 .product-img {
-	width: 100%;
+	width: 7rem;
+	height: 7rem
 }
 
 .product-options {
