@@ -3,6 +3,9 @@
 		<div v-if="$store.getters.loginAttempt" class="alert alert-warning">
 			<p>Debe estar logueado para realizar una compra.</p>
 		</div>
+		<div v-show="registerErrorMessage" class="alert alert-danger">
+			<p>{{ registerErrorMessage }}</p>
+		</div>
 		<div class="row d-flex justify-content-between p-3">
 			<div class="col-6">
 				<h3>Formulario de registro</h3>
@@ -137,20 +140,17 @@
 								v-model.trim="formData.email"
 								placeholder="Email"
 								required />
-							<!-- mensajes de validación 
-						<field-messages name="email" show="$dirty">
-							<div
-								slot="required"
-								class="alert alert-danger mt-1"
-							>
-								Campo requerido
-							</div>
-							<div slot="email" class="alert alert-danger mt-1">
-								Email no válido
-							</div>
-						</field-messages-->
+							<field-messages name="email" show="$dirty">
+								<div
+									slot="required"
+									class="alert alert-danger mt-1">
+									Campo requerido
+								</div>
+								<div slot="email" class="alert alert-danger mt-1">
+									Email no válido
+								</div>
+							</field-messages>
 						</validate>
-						<!--br />-->
 
 						<!-- campo nombre de usuario -->
 						<validate tag="div">
@@ -163,49 +163,36 @@
 								autocomplete="off"
 								placeholder="Nombre de usuario"
 								v-model.trim="formData.username"
-								required />
-							<!--
+								required
 								:minlength="nombreLengthMin"
 								:maxlength="nombreLengthMax"
-								no-spaces
-								div slot="required" class="alert alert-danger mt-0">
-								Campo requerido
-							</div-->
-							<!-- mensajes de validación
-						<field-messages name="nombreUsuario" show="$dirty">
-							<div
-								slot="required"
-								class="alert alert-danger mt-1"
-							>
-								Campo requerido
-							</div>
-							<div
-								slot="no-spaces"
-								class="alert alert-danger mt-1"
-							>
-								No se permiten espacios intermedios en este
-								campo
-							</div>
-							<div
-								slot="minlength"
-								class="alert alert-danger mt-1"
-							>
-								Este campo requiere como mínimo
-								{{ nombreLengthMin }} caracteres
-							</div>
-							<div
-								v-if="
-									formData.nombreUsuario.length ==
-										nombreLengthMax
-								"
-								class="alert alert-warning mt-1"
-							>
-								Este campo debe tener como máximo
-								{{ nombreLengthMax }} caracteres
-							</div>
-						</field-messages-->
+								no-spaces />
+							<field-messages name="nombreUsuario" show="$dirty">
+								<div
+									slot="required"
+									class="alert alert-danger mt-1">
+									Campo requerido
+								</div>
+								<div
+									slot="no-spaces"
+									class="alert alert-danger mt-1">
+									No se permiten espacios intermedios en este
+									campo
+								</div>
+								<div
+									slot="minlength"
+									class="alert alert-danger mt-1">
+									Este campo requiere como mínimo
+									{{ nombreLengthMin }} caracteres
+								</div>
+								<div
+									slot="maxLength"
+									class="alert alert-warning mt-1">
+									Este campo debe tener como máximo
+									{{ nombreLengthMax }} caracteres
+								</div>
+							</field-messages>
 						</validate>
-						<!--br /-->
 					</div>
 					<div class="col-12">
 						<div class="row justify-content-md-center">
@@ -277,7 +264,8 @@ export default {
 			nombreLengthMin: 3,
 			nombreLengthMax: 15,
 			notaMin: 0,
-			notaMax: 10
+			notaMax: 10,
+			registerErrorMessage: null
 		};
 	},
 	created() {
@@ -291,12 +279,12 @@ export default {
 	methods: {
 		getInicialData() {
 			return {
-				name: '',
-				surname: '',
-				password: '',
-				passwordRepeat: '',
-				username: '',
-				email: ''
+				name: 'Nicolas',
+				surname: 'Altman',
+				password: 'hola',
+				passwordRepeat: 'hola',
+				username: 'nicolas44',
+				email: 'altman.nicolas44@gmail.com'
 			};
 		},
 		getInitialLoginData() {
@@ -315,15 +303,12 @@ export default {
 					username: this.formData.username,
 					password: this.formData.password
 				});
+				this.registerErrorMessage = null
 				this.formData = this.getInicialData();
 				this.formState._reset();
 				this.$router.push('/home/Se ha registrado correctamente!');
-			} catch {
-				this.$store.dispatch(
-					'setAlertMessage',
-					'error',
-					'Hubo un problema al intentar guardar los datos'
-				);
+			} catch (err) {
+				this.registerErrorMessage = err.request.responseText
 			}
 		},
 		async login(evt) {
@@ -337,15 +322,19 @@ export default {
 				if (result.status === 200) {
 					//this.$store.dispatch('setUser', result.data.username);
 					this.$store.dispatch('setAuthToken', result.data.token);
-                    this.$router.push(this.redirectTo ? `/${this.redirectTo}` : '/home/Se ha logueado correctamente!')
-					console.log(result.data.token)
+					this.$router.push(
+						this.redirectTo
+							? `/${this.redirectTo}`
+							: '/home/Se ha logueado correctamente!'
+					);
+					console.log(result.data.token);
 					this.$store.dispatch('setUsername', result.data.username);
-                }
-            } catch(err) {
-                console.log('Invalid credentials')
-            }
-            this.invalidLoginCredentials = true
-        }
+				}
+			} catch (err) {
+				console.log('Invalid credentials');
+			}
+			this.invalidLoginCredentials = true;
+		}
 	}
 };
 </script>
@@ -369,9 +358,5 @@ pre {
 
 h1 {
 	color: rgb(224, 108, 0);
-}
-
-p {
-	color: red;
 }
 </style>

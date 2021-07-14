@@ -32,7 +32,8 @@ router.post('/', async (req, res) => {
 	const result = validateUserData(body)
 	if (result.error) {
 		const field = result.error.details[0].path[0]
-		res.status(400).send(getErrorMessageByField(field));
+		const message = getErrorMessageByField(field)
+		res.status(400).send(message);
 	} else {
 		let user = body;
 		try {
