@@ -279,12 +279,12 @@ export default {
 	methods: {
 		getInicialData() {
 			return {
-				name: 'Nicolas',
-				surname: 'Altman',
-				password: 'hola',
-				passwordRepeat: 'hola',
-				username: 'nicolas44',
-				email: 'altman.nicolas44@gmail.com'
+				name: '',
+				surname: '',
+				password: '',
+				passwordRepeat: '',
+				username: '',
+				email: ''
 			};
 		},
 		getInitialLoginData() {
