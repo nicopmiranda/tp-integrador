@@ -31,23 +31,19 @@ router.post('/', async (req, res) => {
 
 	const result = validateUserData(body)
 	if (result.error) {
-		console.log('result.error', result.error)
 		const field = result.error.details[0].path[0]
 		const message = getErrorMessageByField(field)
-		console.log(message)
 		res.status(400).send(message);
 	} else {
 		let user = body;
 		try {
 			const addResult = await dataUsers.addUser(user);
 			if (addResult.error) {
-				console.log('addResult.error', addResult.error)
 				res.status(400).send(addResult.message)
 			} else {
 				res.status(200).json(user);
 			}
 		} catch {
-			console.log('el usuario no pudo ser creado')
 			res.status(400).send('El usuario no pudo ser creado')
 		}
 	}
