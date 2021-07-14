@@ -206,13 +206,11 @@
 					</div>
 				</vue-form>
 			</div>
-			<div class="col-4">
-				<div class="row justifiy-content-start">
-					<div class="col-6">
-						<h3>Login</h3>
-					</div>
+			<div class="col-5">
+				<div class="col-12 text-center">
+					<h3>Login</h3>
 				</div>
-				<form class="col-6 border border-light p-3 text-left">
+				<form class="col-12 border border-light p-3 text-left">
 					<div v-if="invalidLoginCredentials && formLoginData.username &&
 							formLoginData.password" class="alert alert-danger">
 						<p>Credenciales inválidas!</p>
